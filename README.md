@@ -166,6 +166,6 @@ in a PolicySet can also be reported together in a ResultsSet.
 
 ## Copyright
 
-Ampel is released under the Apache 2.0 license by Carabiner Systems, Inc.
+Ampel is released under the Apache 2.0 license by The Policy Labs Project Contributors.
 Feel free to contribute patches or open an issue if you find a problem. Feedback
 is always welcome!
