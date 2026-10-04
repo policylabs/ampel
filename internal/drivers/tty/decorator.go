@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package tty
@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/carabiner-dev/attestation"
-	papi "github.com/carabiner-dev/policy/api/v1"
 	"github.com/fatih/color"
 	gww "github.com/mitchellh/go-wordwrap"
+	"github.com/policylabs/attestation"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 type Decorator struct{}

@@ -1,2 +1,2 @@
-// SPDX-FileCopyrightText: Copyright YYYY Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright YYYY The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0

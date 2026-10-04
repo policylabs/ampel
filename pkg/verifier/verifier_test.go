@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package verifier
@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/timestamppb"
 

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package cel
@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"cel.dev/cel-go/cel"
-	"github.com/carabiner-dev/collector/predicate"
 	intoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/collector/predicate"
 	"github.com/stretchr/testify/require"
 
 	"github.com/carabiner-dev/ampel/pkg/evaluator/evalcontext"

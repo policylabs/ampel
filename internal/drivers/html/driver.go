@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package html
@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"io"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
 	"github.com/jedib0t/go-pretty/v6/table"
+	papi "github.com/policylabs/policy/api/v1"
 
 	"github.com/carabiner-dev/ampel/internal/drivers/gotable"
 )

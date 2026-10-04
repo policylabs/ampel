@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package verifier
@@ -6,10 +6,10 @@ package verifier
 import (
 	"testing"
 
-	"github.com/carabiner-dev/policy"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	sapi "github.com/carabiner-dev/signer/api/v1"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/policy"
+	papi "github.com/policylabs/policy/api/v1"
+	sapi "github.com/policylabs/signer/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

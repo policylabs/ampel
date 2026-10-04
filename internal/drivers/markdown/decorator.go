@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package markdown
@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/carabiner-dev/attestation"
-	papi "github.com/carabiner-dev/policy/api/v1"
+	"github.com/policylabs/attestation"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // Decorator implements the tabnle decorator interface to style the output

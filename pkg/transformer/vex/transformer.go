@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Package vex is a transformer that reads in a vulnerability report
@@ -14,13 +14,13 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/generic"
-	aosv "github.com/carabiner-dev/collector/predicate/osv"
 	"github.com/carabiner-dev/hasher"
 	"github.com/carabiner-dev/osv/go/osv"
 	gointoto "github.com/in-toto/attestation/go/v1"
 	openvex "github.com/openvex/go-vex/pkg/vex"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/generic"
+	aosv "github.com/policylabs/collector/predicate/osv"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"

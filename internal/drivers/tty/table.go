@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package tty
@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
 	"github.com/carabiner-dev/termtable"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // dateFormat is the one-second-resolution layout used for result

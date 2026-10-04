@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Package summary implements a rendering driver that outputs the
@@ -11,7 +11,7 @@ import (
 	"io"
 	"strings"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // New returns a new summary driver

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Package publisher emits the results of an AMPEL policy evaluation to external
@@ -25,7 +25,7 @@ import (
 	"strings"
 	"sync"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // Emitter is the interface implemented by all publisher drivers.

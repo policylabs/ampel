@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -13,18 +13,18 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector"
 	keyOpts "github.com/carabiner-dev/command/keys"
 	"github.com/carabiner-dev/hasher"
-	"github.com/carabiner-dev/policy"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	"github.com/carabiner-dev/policy/options"
-	"github.com/carabiner-dev/signer"
-	"github.com/carabiner-dev/signer/key"
-	signerOpts "github.com/carabiner-dev/signer/options"
 	"github.com/fatih/color"
 	intoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector"
+	"github.com/policylabs/policy"
+	papi "github.com/policylabs/policy/api/v1"
+	"github.com/policylabs/policy/options"
+	"github.com/policylabs/signer"
+	"github.com/policylabs/signer/key"
+	signerOpts "github.com/policylabs/signer/options"
 	"github.com/spf13/cobra"
 	"sigs.k8s.io/release-utils/helpers"
 

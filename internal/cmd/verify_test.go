@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package cmd
@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	signerOpts "github.com/carabiner-dev/signer/options"
+	signerOpts "github.com/policylabs/signer/options"
 
 	"github.com/carabiner-dev/ampel/pkg/verifier"
 )

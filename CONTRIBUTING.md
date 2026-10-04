@@ -44,9 +44,9 @@ git remote add upstream https://github.com/carabiner-dev/ampel.git
 
 Depending on where you are interested in working, you may need to clone other
 repos (the
-[attestation collector](https://github.com/carabiner-dev/collector), the
-[attestation framework](https://github.com/carabiner-dev/attestation), the
-[policy compiler](https://github.com/carabiner-dev/policy), etc).
+[attestation collector](https://github.com/policylabs/collector), the
+[attestation framework](https://github.com/policylabs/attestation), the
+[policy compiler](https://github.com/policylabs/policy), etc).
 
 ### 2. Set Up Your Environment
 
@@ -98,9 +98,9 @@ The AMPEL repository contains only the policy engine, it relies on
 other modules in in the Policy Labs project which are developed and
 released independently:
 
-- The [attestation collector](https://github.com/carabiner-dev/collector)
-- The Policy Labs [attestation framework](https://github.com/carabiner-dev/attestation)
-- The [policy compiler](https://github.com/carabiner-dev/policy)
+- The [attestation collector](https://github.com/policylabs/collector)
+- The Policy Labs [attestation framework](https://github.com/policylabs/attestation)
+- The [policy compiler](https://github.com/policylabs/policy)
 - Signer Library
 
 AMPEL evaluates **policies** written in JSON with executable logic (typically CEL)
@@ -157,7 +157,7 @@ AMPEL supports extensibility via:
 - **Collector Drivers** (sources of attested data)
 
 CEL plugins and Transformers are currently kept in-tree. Collector drivers
-are kept in the [collector repo](https://github.com/carabiner-dev/collector).
+are kept in the [collector repo](https://github.com/policylabs/collector).
 
 Examples:
 

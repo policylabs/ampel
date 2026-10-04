@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Package attest writes attestations capturing evaluation results in
@@ -18,11 +18,11 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/statement/intoto"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	"github.com/carabiner-dev/predicates"
-	"github.com/carabiner-dev/signer"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/statement/intoto"
+	papi "github.com/policylabs/policy/api/v1"
+	"github.com/policylabs/predicates"
+	"github.com/policylabs/signer"
 )
 
 // ampelVerifierID is the verifier identifier embedded in every

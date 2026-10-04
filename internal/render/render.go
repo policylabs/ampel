@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package render
@@ -10,7 +10,7 @@ import (
 	"slices"
 	"sync"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 
 	"github.com/carabiner-dev/ampel/internal/drivers/attester"
 	"github.com/carabiner-dev/ampel/internal/drivers/html"

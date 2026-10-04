@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package verifier
@@ -8,9 +8,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector"
-	"github.com/carabiner-dev/signer/key"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector"
+	"github.com/policylabs/signer/key"
 
 	"github.com/carabiner-dev/ampel/pkg/oscal"
 	"github.com/carabiner-dev/ampel/pkg/publisher"

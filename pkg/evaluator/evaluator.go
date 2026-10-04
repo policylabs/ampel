@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package evaluator
@@ -8,8 +8,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/carabiner-dev/attestation"
-	papi "github.com/carabiner-dev/policy/api/v1"
+	"github.com/policylabs/attestation"
+	papi "github.com/policylabs/policy/api/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	api "github.com/carabiner-dev/ampel/pkg/api/v1"

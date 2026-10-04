@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package protobom
@@ -8,11 +8,11 @@ import (
 	"slices"
 
 	"cel.dev/cel-go/cel"
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/cyclonedx"
-	"github.com/carabiner-dev/collector/predicate/spdx"
-	"github.com/carabiner-dev/collector/predicate/spdx3"
-	papi "github.com/carabiner-dev/policy/api/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/cyclonedx"
+	"github.com/policylabs/collector/predicate/spdx"
+	"github.com/policylabs/collector/predicate/spdx3"
+	papi "github.com/policylabs/policy/api/v1"
 	"github.com/protobom/cel/pkg/elements"
 	"github.com/protobom/cel/pkg/library"
 	"github.com/protobom/protobom/pkg/reader"

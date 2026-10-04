@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2026 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2026 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package attest
@@ -10,12 +10,12 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/generic"
-	"github.com/carabiner-dev/collector/statement/intoto"
-	papi "github.com/carabiner-dev/policy/api/v1"
 	v1 "github.com/in-toto/attestation/go/predicates/vsa/v1"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/generic"
+	"github.com/policylabs/collector/statement/intoto"
+	papi "github.com/policylabs/policy/api/v1"
 	"google.golang.org/protobuf/encoding/protojson"
 )
 

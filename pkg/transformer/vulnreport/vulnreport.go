@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Copyright 2025 Carabiner Systems, Inc
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
 // SPDX-License-Identifier: Apache-2.0
 
 // Package vulnreport implements a transformer that normalizes scanner reports
@@ -14,15 +14,15 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/generic"
-	cosv "github.com/carabiner-dev/collector/predicate/osv"
-	ctrivy "github.com/carabiner-dev/collector/predicate/trivy"
-	cvulns "github.com/carabiner-dev/collector/predicate/vulns"
 	"github.com/carabiner-dev/osv/go/osv"
 	"github.com/carabiner-dev/osv/scanners/grype"
 	"github.com/carabiner-dev/osv/scanners/trivy"
 	"github.com/carabiner-dev/osv/vulns"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/generic"
+	cosv "github.com/policylabs/collector/predicate/osv"
+	ctrivy "github.com/policylabs/collector/predicate/trivy"
+	cvulns "github.com/policylabs/collector/predicate/vulns"
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/types/known/structpb"
 )
