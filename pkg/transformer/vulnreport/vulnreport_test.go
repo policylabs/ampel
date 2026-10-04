@@ -7,13 +7,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/generic"
-	cosv "github.com/carabiner-dev/collector/predicate/osv"
-	ctrivy "github.com/carabiner-dev/collector/predicate/trivy"
-	cvulns "github.com/carabiner-dev/collector/predicate/vulns"
 	"github.com/carabiner-dev/osv/go/osv"
 	v02 "github.com/in-toto/attestation/go/predicates/vulns/v02"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/generic"
+	cosv "github.com/policylabs/collector/predicate/osv"
+	ctrivy "github.com/policylabs/collector/predicate/trivy"
+	cvulns "github.com/policylabs/collector/predicate/vulns"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/structpb"
 )

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	signerOpts "github.com/carabiner-dev/signer/options"
+	signerOpts "github.com/policylabs/signer/options"
 
 	"github.com/carabiner-dev/ampel/pkg/verifier"
 )

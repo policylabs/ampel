@@ -7,10 +7,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/predicate/openvex"
 	"github.com/carabiner-dev/osv/go/osv"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/predicate/openvex"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/encoding/protojson"
 )

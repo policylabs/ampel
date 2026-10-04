@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/carabiner-dev/attestation"
+	"github.com/policylabs/attestation"
 
 	"github.com/carabiner-dev/ampel/pkg/oscal"
 )

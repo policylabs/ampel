@@ -6,7 +6,7 @@ package attester
 import (
 	"io"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 
 	"github.com/carabiner-dev/ampel/pkg/attest"
 )

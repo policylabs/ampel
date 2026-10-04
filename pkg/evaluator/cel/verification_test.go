@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"cel.dev/cel-go/cel"
-	"github.com/carabiner-dev/attestation"
-	sapi "github.com/carabiner-dev/signer/api/v1"
+	"github.com/policylabs/attestation"
+	sapi "github.com/policylabs/signer/api/v1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/structpb"
 )

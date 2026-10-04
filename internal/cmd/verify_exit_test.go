@@ -6,7 +6,7 @@ package cmd
 import (
 	"testing"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 )
 

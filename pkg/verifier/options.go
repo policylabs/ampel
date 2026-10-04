@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/signer/key"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/signer/key"
 
 	"github.com/carabiner-dev/ampel/pkg/context"
 	"github.com/carabiner-dev/ampel/pkg/evaluator/cel"

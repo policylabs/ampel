@@ -11,11 +11,11 @@ import (
 	"strings"
 	"testing"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
-	"github.com/carabiner-dev/signer"
-	"github.com/carabiner-dev/signer/key"
-	"github.com/carabiner-dev/signer/options"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	papi "github.com/policylabs/policy/api/v1"
+	"github.com/policylabs/signer"
+	"github.com/policylabs/signer/key"
+	"github.com/policylabs/signer/options"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

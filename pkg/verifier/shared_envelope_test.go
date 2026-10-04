@@ -8,13 +8,13 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector"
-	"github.com/carabiner-dev/collector/predicate/generic"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	sapi "github.com/carabiner-dev/signer/api/v1"
-	"github.com/carabiner-dev/signer/key"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector"
+	"github.com/policylabs/collector/predicate/generic"
+	papi "github.com/policylabs/policy/api/v1"
+	sapi "github.com/policylabs/signer/api/v1"
+	"github.com/policylabs/signer/key"
 	"github.com/stretchr/testify/require"
 )
 

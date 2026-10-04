@@ -4,9 +4,9 @@
 package evalcontext
 
 import (
-	"github.com/carabiner-dev/attestation"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	sapi "github.com/carabiner-dev/signer/api/v1"
+	"github.com/policylabs/attestation"
+	papi "github.com/policylabs/policy/api/v1"
+	sapi "github.com/policylabs/signer/api/v1"
 )
 
 // The evaluation context is the data structure we pass to the evaluators

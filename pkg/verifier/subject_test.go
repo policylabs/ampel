@@ -7,10 +7,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector"
-	papi "github.com/carabiner-dev/policy/api/v1"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector"
+	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 
 	"github.com/carabiner-dev/ampel/pkg/evaluator"

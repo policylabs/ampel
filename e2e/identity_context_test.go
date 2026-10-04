@@ -8,10 +8,10 @@ package e2e
 import (
 	"testing"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector/envelope/bundle"
-	"github.com/carabiner-dev/policy"
-	papi "github.com/carabiner-dev/policy/api/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector/envelope/bundle"
+	"github.com/policylabs/policy"
+	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 
 	acontext "github.com/carabiner-dev/ampel/pkg/context"

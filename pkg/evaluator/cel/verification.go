@@ -11,8 +11,8 @@ import (
 	"cel.dev/cel-go/common/types"
 	"cel.dev/cel-go/common/types/ref"
 	"cel.dev/cel-go/common/types/traits"
-	"github.com/carabiner-dev/attestation"
-	sapi "github.com/carabiner-dev/signer/api/v1"
+	"github.com/policylabs/attestation"
+	sapi "github.com/policylabs/signer/api/v1"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 

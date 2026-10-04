@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // New returns the TTY driver, wired to the default Decorator.

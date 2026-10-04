@@ -14,15 +14,15 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/carabiner-dev/attestation"
-	"github.com/carabiner-dev/collector"
-	"github.com/carabiner-dev/collector/envelope"
-	"github.com/carabiner-dev/collector/envelope/bare"
-	"github.com/carabiner-dev/collector/filters"
-	"github.com/carabiner-dev/collector/statement/intoto"
-	papi "github.com/carabiner-dev/policy/api/v1"
-	sapi "github.com/carabiner-dev/signer/api/v1"
 	gointoto "github.com/in-toto/attestation/go/v1"
+	"github.com/policylabs/attestation"
+	"github.com/policylabs/collector"
+	"github.com/policylabs/collector/envelope"
+	"github.com/policylabs/collector/envelope/bare"
+	"github.com/policylabs/collector/filters"
+	"github.com/policylabs/collector/statement/intoto"
+	papi "github.com/policylabs/policy/api/v1"
+	sapi "github.com/policylabs/signer/api/v1"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -1325,7 +1325,7 @@ func (di *defaultIplementation) VerifySubject(
 		logrus.WithField("tenet", i).Debugf("Result: %+v", evalres)
 
 		// TODO(puerco): Ideally, we should not reach here with unparseable templates but oh well..
-		// See https://github.com/carabiner-dev/policy/issues/4
+		// See https://github.com/policylabs/policy/issues/4
 
 		// This is the data that gets exposed to error and assessment templates
 		templateData := struct {

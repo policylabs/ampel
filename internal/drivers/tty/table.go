@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	papi "github.com/carabiner-dev/policy/api/v1"
 	"github.com/carabiner-dev/termtable"
+	papi "github.com/policylabs/policy/api/v1"
 )
 
 // dateFormat is the one-second-resolution layout used for result
