@@ -14,7 +14,7 @@ import (
 	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 // TestPolicySetConcurrentEvaluation tests that concurrent evaluation of multiple

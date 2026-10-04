@@ -1,4 +1,4 @@
-module github.com/carabiner-dev/ampel
+module github.com/policylabs/ampel
 
 go 1.26.5
 

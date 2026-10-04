@@ -9,7 +9,7 @@ import (
 
 	papi "github.com/policylabs/policy/api/v1"
 
-	"github.com/carabiner-dev/ampel/internal/drivers/gotable"
+	"github.com/policylabs/ampel/internal/drivers/gotable"
 )
 
 func New() *Driver {

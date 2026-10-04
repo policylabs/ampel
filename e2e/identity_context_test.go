@@ -14,8 +14,8 @@ import (
 	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 
-	acontext "github.com/carabiner-dev/ampel/pkg/context"
-	"github.com/carabiner-dev/ampel/pkg/verifier"
+	acontext "github.com/policylabs/ampel/pkg/context"
+	"github.com/policylabs/ampel/pkg/verifier"
 )
 
 // TestIdentityContextSourceRepo verifies a real GitHub Actions keyless bundle

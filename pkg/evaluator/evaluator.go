@@ -12,10 +12,10 @@ import (
 	papi "github.com/policylabs/policy/api/v1"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	api "github.com/carabiner-dev/ampel/pkg/api/v1"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/cel"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	api "github.com/policylabs/ampel/pkg/api/v1"
+	"github.com/policylabs/ampel/pkg/evaluator/cel"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 // Ensure the known evaluators satisfy the interface

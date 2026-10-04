@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
 # 
 # This script refreshes the SLSA protos from the latest versions in 
 # the SLSA repository.

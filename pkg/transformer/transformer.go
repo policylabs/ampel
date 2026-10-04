@@ -13,9 +13,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/carabiner-dev/ampel/pkg/transformer/protobom"
-	"github.com/carabiner-dev/ampel/pkg/transformer/vex"
-	"github.com/carabiner-dev/ampel/pkg/transformer/vulnreport"
+	"github.com/policylabs/ampel/pkg/transformer/protobom"
+	"github.com/policylabs/ampel/pkg/transformer/vex"
+	"github.com/policylabs/ampel/pkg/transformer/vulnreport"
 )
 
 // Ensure the loaded drivers implement the transformers interface

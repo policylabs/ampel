@@ -9,7 +9,7 @@ import (
 
 	signerOpts "github.com/policylabs/signer/options"
 
-	"github.com/carabiner-dev/ampel/pkg/verifier"
+	"github.com/policylabs/ampel/pkg/verifier"
 )
 
 // TestVerifyOptions_SignGate locks in the rule that --sign is valid

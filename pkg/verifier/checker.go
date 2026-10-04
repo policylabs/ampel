@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package verifier
 
 import (
@@ -6,7 +9,7 @@ import (
 
 	"github.com/policylabs/attestation"
 
-	"github.com/carabiner-dev/ampel/pkg/oscal"
+	"github.com/policylabs/ampel/pkg/oscal"
 )
 
 type defaultStatusChecker struct{}

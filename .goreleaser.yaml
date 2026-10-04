@@ -48,7 +48,7 @@ checksum:
 
 release:
   github:
-    owner: carabiner-dev
+    owner: policylabs
     name: ampel
   prerelease: auto
 

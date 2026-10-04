@@ -25,8 +25,8 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator/evalcontext"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/evaluator/evalcontext"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 // Shared map-key / CEL identifier literals used across the package.

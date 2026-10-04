@@ -12,8 +12,8 @@ import (
 	"github.com/policylabs/attestation"
 	papi "github.com/policylabs/policy/api/v1"
 
-	api "github.com/carabiner-dev/ampel/pkg/api/v1"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
+	api "github.com/policylabs/ampel/pkg/api/v1"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
 )
 
 var Identity = class.MustParseIdentity("semver@v0")

@@ -11,7 +11,7 @@ import (
 	papi "github.com/policylabs/policy/api/v1"
 	"github.com/stretchr/testify/require"
 
-	"github.com/carabiner-dev/ampel/pkg/publisher"
+	"github.com/policylabs/ampel/pkg/publisher"
 )
 
 func TestRegisterAndFromString(t *testing.T) {

@@ -12,13 +12,13 @@ import (
 
 	papi "github.com/policylabs/policy/api/v1"
 
-	"github.com/carabiner-dev/ampel/internal/drivers/attester"
-	"github.com/carabiner-dev/ampel/internal/drivers/html"
-	"github.com/carabiner-dev/ampel/internal/drivers/markdown"
-	"github.com/carabiner-dev/ampel/internal/drivers/summary"
-	"github.com/carabiner-dev/ampel/internal/drivers/svr"
-	"github.com/carabiner-dev/ampel/internal/drivers/tty"
-	"github.com/carabiner-dev/ampel/internal/drivers/vsa"
+	"github.com/policylabs/ampel/internal/drivers/attester"
+	"github.com/policylabs/ampel/internal/drivers/html"
+	"github.com/policylabs/ampel/internal/drivers/markdown"
+	"github.com/policylabs/ampel/internal/drivers/summary"
+	"github.com/policylabs/ampel/internal/drivers/svr"
+	"github.com/policylabs/ampel/internal/drivers/tty"
+	"github.com/policylabs/ampel/internal/drivers/vsa"
 )
 
 type driversList map[string]Driver

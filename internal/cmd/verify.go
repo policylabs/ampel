@@ -28,10 +28,10 @@ import (
 	"github.com/spf13/cobra"
 	"sigs.k8s.io/release-utils/helpers"
 
-	"github.com/carabiner-dev/ampel/internal/render"
-	"github.com/carabiner-dev/ampel/pkg/attest"
-	acontext "github.com/carabiner-dev/ampel/pkg/context"
-	"github.com/carabiner-dev/ampel/pkg/verifier"
+	"github.com/policylabs/ampel/internal/render"
+	"github.com/policylabs/ampel/pkg/attest"
+	acontext "github.com/policylabs/ampel/pkg/context"
+	"github.com/policylabs/ampel/pkg/verifier"
 )
 
 var (
