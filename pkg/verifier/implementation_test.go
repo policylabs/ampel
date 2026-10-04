@@ -16,9 +16,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
-	eoptions "github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/evaluator"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
+	eoptions "github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 func TestEvaluateChain(t *testing.T) {
@@ -164,7 +164,7 @@ func TestEvaluateChain(t *testing.T) {
 		},
 		{
 			// Test that sha1: subject prefix works with gitCommit: attestation digest type
-			// This is the exact bug reported in the GitHub issue: https://github.com/carabiner-dev/ampel/issues/175
+			// This is the exact bug reported in the GitHub issue: https://github.com/policylabs/ampel/issues/175
 			// Subject with sha1: should match attestations with gitCommit: digest
 			"gitCommit-sha1-matching-bug-fix", false, 1, &gointoto.ResourceDescriptor{
 				Name: "commit",

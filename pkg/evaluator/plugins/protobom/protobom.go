@@ -18,8 +18,8 @@ import (
 	"github.com/protobom/protobom/pkg/reader"
 	"github.com/sirupsen/logrus"
 
-	api "github.com/carabiner-dev/ampel/pkg/api/v1"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
+	api "github.com/policylabs/ampel/pkg/api/v1"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
 )
 
 var Identity = class.MustParseIdentity("protobom@v0")

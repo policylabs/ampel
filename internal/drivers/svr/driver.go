@@ -8,7 +8,7 @@ import (
 
 	papi "github.com/policylabs/policy/api/v1"
 
-	"github.com/carabiner-dev/ampel/pkg/attest"
+	"github.com/policylabs/ampel/pkg/attest"
 )
 
 func New() *Driver {

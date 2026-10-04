@@ -33,13 +33,13 @@ on an existing issue.
 
 ### 1. Fork and Clone
 
-Start by [forking the main project repo](https://github.com/carabiner-dev/ampel/fork)
+Start by [forking the main project repo](https://github.com/policylabs/ampel/fork)
 and work from your fork!
 
 ```bash
 git clone https://github.com/YOURNAME/ampel.git
 cd ampel
-git remote add upstream https://github.com/carabiner-dev/ampel.git
+git remote add upstream https://github.com/policylabs/ampel.git
 ```
 
 Depending on where you are interested in working, you may need to clone other
@@ -195,7 +195,7 @@ Please include:
 
 For **security vulnerabilities**, please DO NOT open a public issue.
 Instead,
-[initiate a privet vulnerarbility report](https://github.com/carabiner-dev/ampel/security/advisories/new).
+[initiate a privet vulnerarbility report](https://github.com/policylabs/ampel/security/advisories/new).
 
 ## 🧹 Code Style
 

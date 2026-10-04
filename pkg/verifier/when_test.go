@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 // whenTestOptions mirrors the options the group tests use: no expiration

@@ -15,7 +15,7 @@ import (
 	"cel.dev/cel-go/common/types/traits"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator/plugins/cvss"
+	"github.com/policylabs/ampel/pkg/evaluator/plugins/cvss"
 )
 
 // OSVType is the CEL receiver type backing the `osv` variable.

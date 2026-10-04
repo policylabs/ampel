@@ -28,13 +28,13 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	acontext "github.com/carabiner-dev/ampel/pkg/context"
-	"github.com/carabiner-dev/ampel/pkg/evaluator"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/cel"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/evalcontext"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
-	"github.com/carabiner-dev/ampel/pkg/transformer"
+	acontext "github.com/policylabs/ampel/pkg/context"
+	"github.com/policylabs/ampel/pkg/evaluator"
+	"github.com/policylabs/ampel/pkg/evaluator/cel"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
+	"github.com/policylabs/ampel/pkg/evaluator/evalcontext"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/transformer"
 )
 
 var defaultEvaluatorClass = class.MustParseClass("default")

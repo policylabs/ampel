@@ -10,7 +10,7 @@ please report it responsibly.
 Please use GitHub’s **Private Vulnerability Reporting** feature to submit your
 report:
 
-👉 https://github.com/carabiner-dev/ampel/security/advisories/new
+👉 https://github.com/policylabs/ampel/security/advisories/new
 
 This ensures that maintainers are notified securely and can coordinate a fix
 before public disclosure.

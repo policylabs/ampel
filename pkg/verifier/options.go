@@ -11,10 +11,10 @@ import (
 	"github.com/policylabs/attestation"
 	"github.com/policylabs/signer/key"
 
-	"github.com/carabiner-dev/ampel/pkg/context"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/cel"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/context"
+	"github.com/policylabs/ampel/pkg/evaluator/cel"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 var ResultsAttestationFormats = []string{

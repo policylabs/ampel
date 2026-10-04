@@ -10,8 +10,8 @@ package drivers
 import (
 	"errors"
 
-	"github.com/carabiner-dev/ampel/pkg/publisher"
-	"github.com/carabiner-dev/ampel/pkg/publisher/webhook"
+	"github.com/policylabs/ampel/pkg/publisher"
+	"github.com/policylabs/ampel/pkg/publisher/webhook"
 )
 
 // LoadDefaultEmitterTypes loads the default emitter types into the registry to

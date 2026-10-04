@@ -34,8 +34,8 @@ brew install carabiner-dev/tap/ampel
 ```
 
 Pre-built binaries for Linux, macOS and Windows are also available on the
-[GitHub Releases](https://github.com/carabiner-dev/ampel/releases) page,
-and `go install github.com/carabiner-dev/ampel/cmd/ampel@latest` works for
+[GitHub Releases](https://github.com/policylabs/ampel/releases) page,
+and `go install github.com/policylabs/ampel/cmd/ampel@latest` works for
 Go users. See the project [README](../README.md#installing) for the full
 list of installation options.
 

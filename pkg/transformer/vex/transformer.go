@@ -26,7 +26,7 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/carabiner-dev/ampel/internal/index"
+	"github.com/policylabs/ampel/internal/index"
 )
 
 const ClassName = "vex"

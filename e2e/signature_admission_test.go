@@ -28,7 +28,7 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/types/known/structpb"
 
-	"github.com/carabiner-dev/ampel/pkg/verifier"
+	"github.com/policylabs/ampel/pkg/verifier"
 )
 
 // The admission matrix. Evidence is admitted only when its signature verified

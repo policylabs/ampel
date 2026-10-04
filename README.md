@@ -34,7 +34,7 @@ can transform the output of the common vulnerability scanners to a common format
 ### Download a Binary
 
 Pre-built binaries for Linux, macOS and Windows are available on the
-[GitHub Releases](https://github.com/carabiner-dev/ampel/releases) page.
+[GitHub Releases](https://github.com/policylabs/ampel/releases) page.
 Download the binary for your architecture, and place it as
 `ampel` binary somewhere in your `$PATH`.
 
@@ -58,7 +58,7 @@ brew install ampel
 If you have Go installed, you can install ampel directly:
 
 ```shell
-go install github.com/carabiner-dev/ampel/cmd/ampel@latest
+go install github.com/policylabs/ampel/cmd/ampel@latest
 ```
 
 ### GitHub Action

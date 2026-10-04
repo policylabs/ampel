@@ -12,9 +12,9 @@ import (
 	"github.com/policylabs/collector"
 	"github.com/policylabs/signer/key"
 
-	"github.com/carabiner-dev/ampel/pkg/oscal"
-	"github.com/carabiner-dev/ampel/pkg/publisher"
-	publisherdrivers "github.com/carabiner-dev/ampel/pkg/publisher/drivers"
+	"github.com/policylabs/ampel/pkg/oscal"
+	"github.com/policylabs/ampel/pkg/publisher"
+	publisherdrivers "github.com/policylabs/ampel/pkg/publisher/drivers"
 )
 
 var ErrMissingAttestations = errors.New("required attestations missing to verify subject")

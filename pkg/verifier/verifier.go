@@ -22,10 +22,10 @@ import (
 	"google.golang.org/protobuf/types/known/structpb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/carabiner-dev/ampel/pkg/attest"
-	"github.com/carabiner-dev/ampel/pkg/evaluator"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/class"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/evalcontext"
+	"github.com/policylabs/ampel/pkg/attest"
+	"github.com/policylabs/ampel/pkg/evaluator"
+	"github.com/policylabs/ampel/pkg/evaluator/class"
+	"github.com/policylabs/ampel/pkg/evaluator/evalcontext"
 )
 
 const (

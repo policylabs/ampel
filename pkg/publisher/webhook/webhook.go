@@ -23,7 +23,7 @@ import (
 
 	papi "github.com/policylabs/policy/api/v1"
 
-	"github.com/carabiner-dev/ampel/pkg/publisher"
+	"github.com/policylabs/ampel/pkg/publisher"
 )
 
 // TypeMoniker is the moniker used to select this emitter in an initstring.

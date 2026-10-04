@@ -12,8 +12,8 @@ import (
 	"github.com/policylabs/collector/predicate"
 	"github.com/stretchr/testify/require"
 
-	"github.com/carabiner-dev/ampel/pkg/evaluator/evalcontext"
-	"github.com/carabiner-dev/ampel/pkg/evaluator/options"
+	"github.com/policylabs/ampel/pkg/evaluator/evalcontext"
+	"github.com/policylabs/ampel/pkg/evaluator/options"
 )
 
 func TestEvaluateChainedSelector(t *testing.T) {

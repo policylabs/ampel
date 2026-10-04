@@ -28,7 +28,7 @@ formatters:
       sections:
         - standard
         - default
-        - prefix(github.com/carabiner-dev/ampel)
+        - prefix(github.com/policylabs/ampel)
 linters:
   enable:
     - asasalint
