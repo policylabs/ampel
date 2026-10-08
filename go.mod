@@ -211,7 +211,7 @@ require (
 	github.com/policylabs/collector v0.4.0
 	github.com/policylabs/policy v0.6.0
 	github.com/policylabs/predicates v0.6.0
-	github.com/policylabs/signer v0.6.4
+	github.com/policylabs/signer v0.6.5-0.20261008081547-3730a48c4c4f
 	github.com/regclient/regclient v0.11.6 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
