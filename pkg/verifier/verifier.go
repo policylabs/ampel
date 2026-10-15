@@ -541,6 +541,12 @@ func (ampel *Ampel) VerifySubjectWithPolicy(
 		return nil, fmt.Errorf("filtering attestations: %w", err)
 	}
 
+	// Skip the policy when none of the admitted predicates match any of the
+	// predicate types declared by the policy or its tenets.
+	if policyPredicateMismatch(policy, preds) {
+		return skipPolicyPredicateMismatch(policy, originalSubject), nil
+	}
+
 	transformers, err := ampel.impl.BuildTransformers(opts, policy)
 	if err != nil {
 		return nil, fmt.Errorf("building policy transformers: %w", err)
@@ -960,6 +966,63 @@ func skipPolicy(p *papi.Policy, subject attestation.Subject) *papi.Result {
 			Assessment: &papi.Assessment{Message: skipMessage(p.GetWhen())},
 		}},
 	}
+}
+
+// skipPolicyPredicateMismatch returns a SKIP result for a policy whose declared
+// predicate types do not match any of the available attestation predicates. It
+// is modeled on skipPolicy but uses a predicate-mismatch-specific message
+// instead of referencing the when condition.
+func skipPolicyPredicateMismatch(p *papi.Policy, subject attestation.Subject) *papi.Result {
+	now := timestamppb.Now()
+	return &papi.Result{
+		Status:    papi.StatusSKIP,
+		DateStart: now,
+		DateEnd:   now,
+		Policy: &papi.PolicyRef{
+			Id:      p.GetId(),
+			Version: p.GetMeta().GetVersion(),
+		},
+		Meta:    p.GetMeta(),
+		Subject: subjectDescriptor(subject),
+		EvalResults: []*papi.EvalResult{{
+			Id:     "predicate-match",
+			Status: papi.StatusSKIP,
+			Date:   now,
+			Assessment: &papi.Assessment{
+				Message: "no attestations match the policy's declared predicate types",
+			},
+		}},
+	}
+}
+
+// policyPredicateMismatch returns true when the policy declares at least one
+// predicate type (at the policy level or in any tenet) but none of the
+// available predicates match any of those declared types. A policy with no
+// declared types is unconstrained and never matches.
+func policyPredicateMismatch(p *papi.Policy, preds []attestation.Predicate) bool {
+	// Collect all declared predicate types from the policy and its tenets.
+	declared := map[attestation.PredicateType]struct{}{}
+	for _, t := range p.GetPredicates().GetTypes() {
+		declared[attestation.PredicateType(t)] = struct{}{}
+	}
+	for _, tenet := range p.GetTenets() {
+		for _, t := range tenet.GetPredicates().GetTypes() {
+			declared[attestation.PredicateType(t)] = struct{}{}
+		}
+	}
+
+	// No declared types means unconstrained — never skip.
+	if len(declared) == 0 {
+		return false
+	}
+
+	// Check if any available predicate matches a declared type.
+	for _, pred := range preds {
+		if _, ok := declared[pred.GetType()]; ok {
+			return false
+		}
+	}
+	return true
 }
 
 // allPoliciesSkipped reports if there are results and every one is a skip.
