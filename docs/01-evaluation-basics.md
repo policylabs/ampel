@@ -40,3 +40,7 @@ ampel verify binary.exe -p policy.json -a attestation.intoto.json
 By default, AMPEL exits -1 if the policy does not pass. In the example above, we
 are feeding ampel a single attestation. While you can specify attestations via
 the `-a|--attestation` flag, in the real world you will be using collectors. 
+
+`ampel verify` on its own is short for `ampel verify artifact`, the subcommand
+that takes a file to hash or a digest. Other kinds of subjects get their own
+subcommand under `ampel verify`.
