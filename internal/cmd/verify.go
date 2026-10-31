@@ -497,6 +497,24 @@ func artifactPreRun(opts *verifyOptions) func(*cobra.Command, []string) error {
 	}
 }
 
+// subcommandUsage renders the short usage a bare "ampel verify" prints:
+// the banner, the subcommand usage line and the subcommand list. The
+// artifact form of the command and its flags stay in the full help.
+func subcommandUsage(c *cobra.Command) string {
+	var sb strings.Builder
+	fmt.Fprintf(&sb, "%s\n\n", AmpelBanner(c.Short))
+	fmt.Fprintf(&sb, "Usage:\n  %s [command]\n\n", c.CommandPath())
+	sb.WriteString("Available Commands:\n")
+	for _, sub := range c.Commands() {
+		if !sub.IsAvailableCommand() {
+			continue
+		}
+		fmt.Fprintf(&sb, "  %-*s %s\n", sub.NamePadding(), sub.Name(), sub.Short)
+	}
+	fmt.Fprintf(&sb, "\nUse \"%s [command] --help\" for more information about a command.\n", c.CommandPath())
+	return sb.String()
+}
+
 // runVerify is the RunE every verify command shares.
 func runVerify(opts *verifyOptions) func(*cobra.Command, []string) error {
 	return func(c *cobra.Command, _ []string) error {
@@ -520,7 +538,16 @@ func newVerifyCommand() (*cobra.Command, *verifyOptions) {
 		SilenceErrors:     false,
 		PersistentPreRunE: initLogging,
 		PreRunE:           artifactPreRun(opts),
-		RunE:              runVerify(opts),
+		// Bare "ampel verify" lists the subcommands instead of complaining
+		// about a missing subject. Anything else, even a lone flag, is an
+		// attempt at an artifact run and gets validated as one.
+		RunE: func(c *cobra.Command, args []string) error {
+			if len(args) == 0 && c.Flags().NFlag() == 0 {
+				_, err := fmt.Fprint(c.OutOrStdout(), subcommandUsage(c))
+				return err
+			}
+			return runVerify(opts)(c, args)
+		},
 	}
 
 	opts.AddFlags(evalCmd)

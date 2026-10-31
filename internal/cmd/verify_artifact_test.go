@@ -4,10 +4,12 @@
 package cmd
 
 import (
+	"bytes"
 	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/require"
 )
 
@@ -61,4 +63,37 @@ func TestVerifyArtifactSubject(t *testing.T) {
 	// defines its own and inherits none from verify.
 	require.NotNil(t, artifactCmd.Flags().Lookup("subject-hash"))
 	require.Nil(t, artifactCmd.InheritedFlags().Lookup("subject-hash"))
+}
+
+// Bare "ampel verify" prints the short usage listing the subcommands,
+// without the flag sections, and succeeds. As soon as anything is passed,
+// a missing subject is an error.
+func TestVerifyBareShowsHelp(t *testing.T) {
+	t.Parallel()
+
+	// Logging is set up from the root command's --log-level flag, which
+	// is not registered when verify runs on its own.
+	newCmd := func() *cobra.Command {
+		cmd, _ := newVerifyCommand()
+		cmd.PersistentPreRunE = nil
+		return cmd
+	}
+
+	cmd := newCmd()
+	var out bytes.Buffer
+	cmd.SetOut(&out)
+	cmd.SetArgs([]string{})
+	require.NoError(t, cmd.Execute())
+	require.Contains(t, out.String(), "Usage:")
+	require.NotContains(t, out.String(), "[subject]")
+	require.Contains(t, out.String(), "Available Commands:")
+	require.Contains(t, out.String(), "artifact")
+	require.NotContains(t, out.String(), "Subject Specification:")
+	require.NotContains(t, out.String(), "--policy")
+
+	cmd = newCmd()
+	cmd.SetOut(&out)
+	cmd.SetErr(&out)
+	cmd.SetArgs([]string{"-p", "policy.json"})
+	require.ErrorContains(t, cmd.Execute(), "no subject specified")
 }
