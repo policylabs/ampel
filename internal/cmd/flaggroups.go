@@ -48,12 +48,16 @@ func flagGroupsOf(cmd *cobra.Command) ([]flagGroup, bool) {
 	return groups, ok
 }
 
-// groupFlags tags each named persistent flag on cmd with group. Unknown
-// flag names are skipped silently so the helper stays robust if a flag
-// is later renamed or removed.
+// groupFlags tags each named flag on cmd, persistent or local, with group.
+// Unknown flag names are skipped silently so the helper stays robust if a
+// flag is later renamed or removed, and so one list can serve commands
+// that define different subsets of it.
 func groupFlags(cmd *cobra.Command, group string, names ...string) {
 	for _, name := range names {
 		f := cmd.PersistentFlags().Lookup(name)
+		if f == nil {
+			f = cmd.Flags().Lookup(name)
+		}
 		if f == nil {
 			continue
 		}

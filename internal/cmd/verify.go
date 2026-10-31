@@ -81,7 +81,20 @@ var verifyFlagGroups = []flagGroup{
 	{ID: grpVerification, Title: "Verification Flags:"},
 }
 
+// subjectKind names how a verify command turns its argument into the
+// subject it evaluates. Today that is an artifact, a file or digest;
+// other kinds get their own verify subcommand.
+type subjectKind string
+
+const (
+	subjectArtifact subjectKind = "artifact"
+)
+
 type verifyOptions struct {
+	// SubjectKind records which verify subcommand is running. Empty means
+	// artifact, the default when verify gets no subcommand.
+	SubjectKind subjectKind
+
 	// FailSkip makes the command exit non-zero on a SKIP result. It only
 	// matters with AllowSkip, which is what lets a run answer SKIP: the
 	// record keeps the skip, the exit code treats it as a failure, so a
@@ -109,21 +122,28 @@ type verifyOptions struct {
 	SignerSet             *signerOpts.SignerSet
 }
 
-// AddFlags adds the flags
-func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
-	o.Options.AddFlags(cmd)
-	cmd.PersistentFlags().StringVarP(
+// addArtifactFlags adds the flags that name a file or digest subject. They
+// are local to the command so subcommands that get their subject from
+// their argument do not inherit them.
+func (o *verifyOptions) addArtifactFlags(cmd *cobra.Command) {
+	cmd.Flags().StringVarP(
 		&o.Subject, "subject", "s", "", "subject hash (algo:value) or path to file (alternative to positional argument)",
 	)
 
-	cmd.PersistentFlags().StringVar(
+	cmd.Flags().StringVar(
 		&o.SubjectFile, "subject-file", "", "file to verify",
 	)
 
-	cmd.PersistentFlags().StringVar(
+	cmd.Flags().StringVar(
 		&o.SubjectHash, "subject-hash", "", "hash to verify (algorithm:value, any in-toto DigestSet algorithm)",
 	)
+}
 
+// AddFlags adds the flags shared by every verify command. The flags that
+// name the subject are added per command by addArtifactFlags and friends,
+// and groupFlags lays all of them out for --help.
+func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
+	o.Options.AddFlags(cmd)
 	cmd.PersistentFlags().StringVarP(
 		&o.PolicyLocation, "policy", "p", "", "policy/policySet (h)json source location (file path, URL, or VCS locator)",
 	)
@@ -228,7 +248,12 @@ func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
 		&o.Sign, "sign", false, "sign the results attestation",
 	)
 	o.SignerSet.AddFlags(cmd)
+}
 
+// groupFlags buckets the flags registered on cmd under the --help headings.
+// Flag names a command does not define are skipped, so the same list serves
+// every verify command.
+func (o *verifyOptions) groupFlags(cmd *cobra.Command) {
 	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash")
 	groupFlags(cmd, grpPolicy, "policy", "pid", "policy-out", "policy-verify", "policy-key", "policy-signer", "expiration")
 	groupFlags(cmd, grpEvidence, "key", "attestation", "collector", "signer")
@@ -245,9 +270,16 @@ func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
 	applyFlagGroupTemplate(cmd)
 }
 
-// SubjectDescriptor parses the subject string read from the command line
-// and returns a resource descriptor, either by synhesizing it from the specified
-// hash or by hashing a file.
+// kind returns the subject kind in effect, artifact when none was set.
+func (o *verifyOptions) kind() subjectKind {
+	if o.SubjectKind == "" {
+		return subjectArtifact
+	}
+	return o.SubjectKind
+}
+
+// SubjectDescriptor resolves the subject read from the command line into a
+// resource descriptor: a digest is used as given and a file is hashed.
 func (o *verifyOptions) SubjectDescriptor() (attestation.Subject, error) {
 	// If we have a hash, check it and create the descriptor:
 	if o.SubjectHash != "" {
@@ -283,12 +315,14 @@ func (o *verifyOptions) Validate() error {
 	errs := []error{
 		o.VerificationOptions.Validate(),
 	}
-	if o.SubjectFile == "" && o.SubjectHash == "" {
-		errs = append(errs, fmt.Errorf("no subject specified (use --subject, --subject-file or --subject-hash)"))
-	}
+	if o.kind() == subjectArtifact {
+		if o.SubjectFile == "" && o.SubjectHash == "" {
+			errs = append(errs, fmt.Errorf("no subject specified (use --subject, --subject-file or --subject-hash)"))
+		}
 
-	if o.SubjectFile != "" && o.SubjectHash != "" {
-		errs = append(errs, fmt.Errorf("subject specified twice (as file and hash)"))
+		if o.SubjectFile != "" && o.SubjectHash != "" {
+			errs = append(errs, fmt.Errorf("subject specified twice (as file and hash)"))
+		}
 	}
 
 	if o.PolicyLocation == "" {
@@ -366,9 +400,8 @@ func addVerify(parentCmd *cobra.Command) {
 	parentCmd.AddCommand(cmd)
 }
 
-// newVerifyCommand builds the verify command and returns it along with the
-// options it is bound to.
-func newVerifyCommand() (*cobra.Command, *verifyOptions) {
+// newVerifyOptions returns the options every verify command binds to.
+func newVerifyOptions() *verifyOptions {
 	opts := &verifyOptions{
 		VerificationOptions: verifier.NewVerificationOptions(),
 		SignerSet:           signerOpts.DefaultSignerSet(),
@@ -379,9 +412,12 @@ func newVerifyCommand() (*cobra.Command, *verifyOptions) {
 	//
 	// Evidence fetched by collectors never gets this treatment.
 	opts.AdmitUnverified = true
-	evalCmd := &cobra.Command{
-		Short: "check artifacts against a policy",
-		Long: fmt.Sprintf(`
+	return opts
+}
+
+// verifyLong is the help text shared by verify and verify artifact.
+func verifyLong() string {
+	return fmt.Sprintf(`
 %s
 
 Ampel verify checks an artifact (a subject) against a policy file to assert
@@ -393,6 +429,10 @@ To verify an artifact, ampel required three pieces:
 This is often an artifact such as a file. Most commonly, a policy will be evaluated
 against a hash. AMPEL can compute the hashes from files for you (--subject-file)
 or you can specify a hash in the command line using --subject-hash.
+
+Files and digests are verified by "ampel verify artifact"; other kinds of
+subjects get their own subcommand. Running "ampel verify" with no subcommand
+is the same as "ampel verify artifact".
 
 %s
 The policy code. Ampel policies are written in JSON, they can be signed and verified 
@@ -409,58 +449,105 @@ of trust. Attestations can be supplied through the command line or can be obtain
 using a collector.
 
 		`,
-			AmpelBanner("Amazing Multipurpose Policy Engine and L"),
-			color.New(color.FgHiWhite).Sprint("The Subject"),
-			color.New(color.FgHiWhite).Sprint("The Policy"),
-			color.New(color.FgHiWhite).Sprint("Attested Evidence"),
-		),
+		AmpelBanner("Amazing Multipurpose Policy Engine and L"),
+		color.New(color.FgHiWhite).Sprint("The Subject"),
+		color.New(color.FgHiWhite).Sprint("The Policy"),
+		color.New(color.FgHiWhite).Sprint("Attested Evidence"),
+	)
+}
+
+// artifactPreRun reads the artifact subject from the positional argument
+// or the --subject flag and sorts it into a digest or a file.
+func artifactPreRun(opts *verifyOptions) func(*cobra.Command, []string) error {
+	return func(_ *cobra.Command, args []string) error {
+		opts.SubjectKind = subjectArtifact
+		if len(args) > 0 {
+			if opts.Subject == "" {
+				opts.Subject = args[0]
+			} else if opts.Subject != args[0] {
+				return fmt.Errorf("subject specified twice: got %q from positional argument and %q from -s flag (use only one)", args[0], opts.Subject)
+			}
+		}
+
+		if opts.Subject != "" {
+			switch {
+			// Anything shaped like a digest is treated as one, never as a
+			// file, so a carefully placed file cannot shadow a hash.
+			case subject.LooksLikeDigest(opts.Subject):
+				if _, _, err := subject.ParseDigest(opts.Subject); err != nil {
+					return fmt.Errorf("invalid subject hash %q: %w", opts.Subject, err)
+				}
+				if opts.SubjectHash == "" {
+					opts.SubjectHash = opts.Subject
+				} else if opts.SubjectHash != opts.Subject {
+					return fmt.Errorf("subject hash specified twice")
+				}
+			case helpers.Exists(opts.Subject):
+				if opts.SubjectFile == "" {
+					opts.SubjectFile = opts.Subject
+				} else {
+					return fmt.Errorf("subject file specified twice")
+				}
+			default:
+				return fmt.Errorf("unable to identify subject string %q", opts.Subject)
+			}
+		}
+
+		return nil
+	}
+}
+
+// runVerify is the RunE every verify command shares.
+func runVerify(opts *verifyOptions) func(*cobra.Command, []string) error {
+	return func(c *cobra.Command, _ []string) error {
+		c.SilenceUsage = true
+		return opts.Run()
+	}
+}
+
+// newVerifyCommand builds the verify command and returns it along with the
+// options it is bound to. The command itself verifies an artifact, the
+// same as its artifact subcommand, so "ampel verify FILE" keeps working;
+// the other subcommands take other kinds of subjects.
+func newVerifyCommand() (*cobra.Command, *verifyOptions) {
+	opts := newVerifyOptions()
+	evalCmd := &cobra.Command{
+		Short:             "check artifacts against a policy",
+		Long:              verifyLong(),
 		Use:               "verify [subject]",
+		Args:              cobra.MaximumNArgs(1),
 		SilenceUsage:      false,
 		SilenceErrors:     false,
 		PersistentPreRunE: initLogging,
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			if len(args) > 0 {
-				if opts.Subject == "" {
-					opts.Subject = args[0]
-				} else if opts.Subject != args[0] {
-					return fmt.Errorf("subject specified twice: got %q from positional argument and %q from -s flag (use only one)", args[0], opts.Subject)
-				}
-			}
-
-			if opts.Subject != "" {
-				switch {
-				// Anything shaped like a digest is treated as one, never as a
-				// file, so a carefully placed file cannot shadow a hash.
-				case subject.LooksLikeDigest(opts.Subject):
-					if _, _, err := subject.ParseDigest(opts.Subject); err != nil {
-						return fmt.Errorf("invalid subject hash %q: %w", opts.Subject, err)
-					}
-					if opts.SubjectHash == "" {
-						opts.SubjectHash = opts.Subject
-					} else if opts.SubjectHash != opts.Subject {
-						return fmt.Errorf("subject hash specified twice")
-					}
-				case helpers.Exists(opts.Subject):
-					if opts.SubjectFile == "" {
-						opts.SubjectFile = opts.Subject
-					} else {
-						return fmt.Errorf("subject file specified twice")
-					}
-				default:
-					return fmt.Errorf("unable to identify subject string %q", opts.Subject)
-				}
-			}
-
-			return nil
-		},
-		RunE: func(c *cobra.Command, _ []string) error {
-			c.SilenceUsage = true
-			return opts.Run()
-		},
+		PreRunE:           artifactPreRun(opts),
+		RunE:              runVerify(opts),
 	}
 
 	opts.AddFlags(evalCmd)
+	opts.addArtifactFlags(evalCmd)
+	opts.groupFlags(evalCmd)
+
+	evalCmd.AddCommand(newVerifyArtifactCommand(opts))
 	return evalCmd, opts
+}
+
+// newVerifyArtifactCommand builds "verify artifact", the explicit form of
+// the default verify behavior.
+func newVerifyArtifactCommand(opts *verifyOptions) *cobra.Command {
+	cmd := &cobra.Command{
+		Short:         "check a file or digest against a policy",
+		Long:          verifyLong(),
+		Use:           "artifact [subject]",
+		Args:          cobra.MaximumNArgs(1),
+		SilenceUsage:  false,
+		SilenceErrors: false,
+		PreRunE:       artifactPreRun(opts),
+		RunE:          runVerify(opts),
+	}
+	opts.AddFlags(cmd)
+	opts.addArtifactFlags(cmd)
+	opts.groupFlags(cmd)
+	return cmd
 }
 
 // Run executes the verify command logic.
