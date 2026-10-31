@@ -47,9 +47,18 @@ subcommand under `ampel verify`, which computes the digest the way the
 attestations about them do:
 
 ```bash
+# A container image, resolved to the digest of its manifest
+ampel verify image ghcr.io/example/app:v1.2.3 -p policy.json -c coci:ghcr.io/example/app:v1.2.3
+
 # An AI model directory, hashed as OpenSSF Model Signing does
 ampel verify model ./my-model -p policy.json -a my-model.sig
 ```
+
+`ampel verify image` resolves the reference at its registry into the digest
+of the manifest the tag points to, the digest that signatures and
+attestations about the image are bound to. A reference that already carries
+a digest is used as is. Multi-platform images resolve to the digest of their
+index; to check one platform, pass that platform's manifest digest.
 
 `ampel verify model` walks the model directory (or a single model file),
 hashes every regular file and folds the digests into the root digest that
