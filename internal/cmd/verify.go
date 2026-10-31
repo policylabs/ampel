@@ -82,18 +82,25 @@ var verifyFlagGroups = []flagGroup{
 }
 
 // subjectKind names how a verify command turns its argument into the
-// subject it evaluates. Today that is an artifact, a file or digest;
-// other kinds get their own verify subcommand.
+// subject it evaluates: a file or digest, or an AI model directory.
 type subjectKind string
 
 const (
 	subjectArtifact subjectKind = "artifact"
+	subjectModel    subjectKind = "model"
 )
 
 type verifyOptions struct {
 	// SubjectKind records which verify subcommand is running. Empty means
 	// artifact, the default when verify gets no subcommand.
 	SubjectKind subjectKind
+
+	// ModelPath is the AI model directory (or single file) hashed by
+	// verify model, with the paths left out of its digest and whether
+	// symlinks in it are followed.
+	ModelPath          string
+	ModelIgnorePaths   []string
+	ModelAllowSymlinks bool
 
 	// FailSkip makes the command exit non-zero on a SKIP result. It only
 	// matters with AllowSkip, which is what lets a run answer SKIP: the
@@ -136,6 +143,17 @@ func (o *verifyOptions) addArtifactFlags(cmd *cobra.Command) {
 
 	cmd.Flags().StringVar(
 		&o.SubjectHash, "subject-hash", "", "hash to verify (algorithm:value, any in-toto DigestSet algorithm)",
+	)
+}
+
+// addModelFlags adds the flags that tune how a model directory is hashed.
+func (o *verifyOptions) addModelFlags(cmd *cobra.Command) {
+	cmd.Flags().StringSliceVar(
+		&o.ModelIgnorePaths, "ignore-path", []string{}, "paths to leave out of the model digest, relative to the model root (git metadata is always left out)",
+	)
+
+	cmd.Flags().BoolVar(
+		&o.ModelAllowSymlinks, "allow-symlinks", false, "hash symlinks in the model through their targets instead of rejecting them",
 	)
 }
 
@@ -254,7 +272,7 @@ func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
 // Flag names a command does not define are skipped, so the same list serves
 // every verify command.
 func (o *verifyOptions) groupFlags(cmd *cobra.Command) {
-	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash")
+	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash", "ignore-path", "allow-symlinks")
 	groupFlags(cmd, grpPolicy, "policy", "pid", "policy-out", "policy-verify", "policy-key", "policy-signer", "expiration")
 	groupFlags(cmd, grpEvidence, "key", "attestation", "collector", "signer")
 	groupFlags(cmd, grpContext, "context", "context-json", "context-yaml", "context-env")
@@ -279,8 +297,13 @@ func (o *verifyOptions) kind() subjectKind {
 }
 
 // SubjectDescriptor resolves the subject read from the command line into a
-// resource descriptor: a digest is used as given and a file is hashed.
+// resource descriptor: a digest is used as given, a file is hashed and a
+// model directory is hashed the way model signing does.
 func (o *verifyOptions) SubjectDescriptor() (attestation.Subject, error) {
+	if o.kind() == subjectModel {
+		return modelSubject(o.ModelPath, o.ModelIgnorePaths, o.ModelAllowSymlinks)
+	}
+
 	// If we have a hash, check it and create the descriptor:
 	if o.SubjectHash != "" {
 		algo, val, err := subject.ParseDigest(o.SubjectHash)
@@ -315,7 +338,12 @@ func (o *verifyOptions) Validate() error {
 	errs := []error{
 		o.VerificationOptions.Validate(),
 	}
-	if o.kind() == subjectArtifact {
+	switch o.kind() {
+	case subjectModel:
+		if o.ModelPath == "" {
+			errs = append(errs, errors.New("no model path specified"))
+		}
+	case subjectArtifact:
 		if o.SubjectFile == "" && o.SubjectHash == "" {
 			errs = append(errs, fmt.Errorf("no subject specified (use --subject, --subject-file or --subject-hash)"))
 		}
@@ -431,8 +459,9 @@ against a hash. AMPEL can compute the hashes from files for you (--subject-file)
 or you can specify a hash in the command line using --subject-hash.
 
 Files and digests are verified by "ampel verify artifact"; other kinds of
-subjects get their own subcommand. Running "ampel verify" with no subcommand
-is the same as "ampel verify artifact".
+subjects get their own subcommand: "ampel verify model" hashes an AI model
+directory the way model signing does. Running "ampel verify" with no
+subcommand is the same as "ampel verify artifact".
 
 %s
 The policy code. Ampel policies are written in JSON, they can be signed and verified 
@@ -554,7 +583,10 @@ func newVerifyCommand() (*cobra.Command, *verifyOptions) {
 	opts.addArtifactFlags(evalCmd)
 	opts.groupFlags(evalCmd)
 
-	evalCmd.AddCommand(newVerifyArtifactCommand(opts))
+	evalCmd.AddCommand(
+		newVerifyArtifactCommand(opts),
+		newVerifyModelCommand(opts),
+	)
 	return evalCmd, opts
 }
 

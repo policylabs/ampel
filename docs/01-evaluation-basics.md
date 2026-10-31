@@ -43,4 +43,18 @@ the `-a|--attestation` flag, in the real world you will be using collectors.
 
 `ampel verify` on its own is short for `ampel verify artifact`, the subcommand
 that takes a file to hash or a digest. Other kinds of subjects get their own
-subcommand under `ampel verify`.
+subcommand under `ampel verify`, which computes the digest the way the
+attestations about them do:
+
+```bash
+# An AI model directory, hashed as OpenSSF Model Signing does
+ampel verify model ./my-model -p policy.json -a my-model.sig
+```
+
+`ampel verify model` walks the model directory (or a single model file),
+hashes every regular file and folds the digests into the root digest that
+model signing records as the subject of its signatures. Git metadata at the
+root of the model is left out, as the specification requires; other files,
+such as a signature bundle stored next to the weights, are left out with
+`--ignore-path`. Symlinks are rejected unless `--allow-symlinks` is set,
+matching the setting the model was signed with.

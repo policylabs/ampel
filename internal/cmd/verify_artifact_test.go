@@ -14,8 +14,8 @@ import (
 )
 
 // A bare "ampel verify" still verifies an artifact: anything that is not
-// the name of a subcommand is its subject, while "artifact" routes to the
-// explicit subcommand.
+// the name of a subcommand is its subject, while "artifact" and "model"
+// route to their subcommands.
 func TestVerifySubcommandRouting(t *testing.T) {
 	t.Parallel()
 	const digest = "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -28,6 +28,7 @@ func TestVerifySubcommandRouting(t *testing.T) {
 		{[]string{}, "verify"},
 		{[]string{"artifact", "./some-file"}, "artifact"},
 		{[]string{"artifact", digest}, "artifact"},
+		{[]string{"model", "./some-dir"}, "model"},
 	} {
 		cmd, _ := newVerifyCommand()
 		found, _, err := cmd.Find(tc.args)

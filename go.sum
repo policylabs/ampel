@@ -118,6 +118,8 @@ github.com/carabiner-dev/hasher v0.2.4 h1:VaI04+FBHaNV/UEy0NmVoRg0pKLFeN76KPOHbT
 github.com/carabiner-dev/hasher v0.2.4/go.mod h1:W83zi1+E3he4Cpldss8yoXNj6GdDUpr3M45dOAzem/w=
 github.com/carabiner-dev/jsonl v0.2.2 h1:6uj/T0tZJYb2pdrS91JXDyMq0zj2QU8f5s/Rxblu0vs=
 github.com/carabiner-dev/jsonl v0.2.2/go.mod h1:AOOyOoXDVi3q4EJxrAjDjftHJej7f+yHq2kP4mb4CKw=
+github.com/carabiner-dev/model-signing v0.1.0 h1:vBtaLDo/eWWwLxR1CH7wP6DtGCEdCcu8LbYPVmqry3I=
+github.com/carabiner-dev/model-signing v0.1.0/go.mod h1:NvGFL7yG2JyxMwe1XxNEKjSyRaO4zlAiaSp+T+Y+cnI=
 github.com/carabiner-dev/openeox v1.0.0 h1:iVfs9jgu2s2Jrb95bJK5FWMx55qF3aHBk9RhUOkZKco=
 github.com/carabiner-dev/openeox v1.0.0/go.mod h1:+6i8M7PhtWk2jRtUC1anZnhmOr5cXKMLGYjwFcqPDa0=
 github.com/carabiner-dev/osv v0.1.2 h1:W5nZOGuygnqzB7YbGon6ab3iFHxFZZgzS3m7GEvYnfc=
