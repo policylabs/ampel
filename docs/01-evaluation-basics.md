@@ -58,7 +58,8 @@ ampel verify model ./my-model -p policy.json -a my-model.sig
 of the manifest the tag points to, the digest that signatures and
 attestations about the image are bound to. A reference that already carries
 a digest is used as is. Multi-platform images resolve to the digest of their
-index; to check one platform, pass that platform's manifest digest. The
+index; `--platform linux/arm64` selects one platform's manifest from the
+index instead, and its digest becomes the subject. The
 attestations attached to the image in its registry, both under cosign's
 `.att` tag and as OCI referrers, are collected by default, so no collector
 needs to be configured for them; `--registry-attestations=false` turns that
