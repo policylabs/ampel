@@ -58,6 +58,19 @@ If you have Go installed, you can install ampel directly:
 go install github.com/policylabs/ampel/cmd/ampel@latest
 ```
 
+### Container Image
+
+Every release also publishes a container image, signed with sigstore and with
+its SLSA provenance attached (the quick start below verifies it). The image
+runs `ampel` as its entrypoint, so mount the policy and evidence you need:
+
+```shell
+docker run --rm -v "$PWD:/work" -w /work ghcr.io/policylabs/ampel:v1.4.2 \
+  verify sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 \
+  -p docs/examples/sbom/sbom-checks.hjson \
+  -a docs/examples/sbom/sbom.spdx.intoto.json
+```
+
 ### GitHub Action
 
 Ampel is also available as a GitHub Action for use in CI/CD workflows.
@@ -149,7 +162,7 @@ and results in depth.
 ### Attestations Collector
 
 Policy evaluation relies on attestations. AMPEL relies on the
-[Carabiner Collector](https://github.com/policylabs/collector)
+[Policy Labs collector](https://github.com/policylabs/collector)
 to read attestations from all sorts of backends, from repositories, registries,
 filesystems and more.
 
@@ -167,6 +180,11 @@ attest their state.
 
 - [unpack](https://github.com/carabiner-dev/unpack): A dependency extractor with
 SBOM visualization and generation capabilities.
+
+- [oms](https://github.com/carabiner-dev/model-signing): Signs and verifies AI
+models following the
+[OpenSSF Model Signing specification](https://openssf.org/projects/model-signing/).
+Its hashing is what `ampel verify model` uses.
 
 ## Policies
 
@@ -239,7 +257,9 @@ for details.
 Multiple policies can be specified together in a `PolicySet`. This is a handy way
 to maintain policies that relate to each other in a single file to make them
 available to the engine at evaluation time. The results of policies tied together
-in a PolicySet can also be reported together in a ResultsSet.
+in a PolicySet can also be reported together in a ResultsSet. When there is more
+than one way to satisfy a requirement, a `PolicyGroup` holds blocks of
+alternative policies; see the [policy groups guide](docs/05-policy-groups.md).
 
 ## Copyright
 
