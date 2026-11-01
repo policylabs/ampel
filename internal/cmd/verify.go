@@ -82,11 +82,13 @@ var verifyFlagGroups = []flagGroup{
 }
 
 // subjectKind names how a verify command turns its argument into the
-// subject it evaluates: a file or digest, or an AI model directory.
+// subject it evaluates: a file or digest, a container image reference or
+// an AI model directory.
 type subjectKind string
 
 const (
 	subjectArtifact subjectKind = "artifact"
+	subjectImage    subjectKind = "image"
 	subjectModel    subjectKind = "model"
 )
 
@@ -94,6 +96,10 @@ type verifyOptions struct {
 	// SubjectKind records which verify subcommand is running. Empty means
 	// artifact, the default when verify gets no subcommand.
 	SubjectKind subjectKind
+
+	// ImageRef is the container image reference verify image resolves to
+	// the digest of the image manifest.
+	ImageRef string
 
 	// ModelPath is the AI model directory (or single file) hashed by
 	// verify model, with the paths left out of its digest and whether
@@ -297,11 +303,16 @@ func (o *verifyOptions) kind() subjectKind {
 }
 
 // SubjectDescriptor resolves the subject read from the command line into a
-// resource descriptor: a digest is used as given, a file is hashed and a
-// model directory is hashed the way model signing does.
+// resource descriptor: a digest is used as given, a file is hashed, an
+// image reference is resolved at its registry and a model directory is
+// hashed the way model signing does.
 func (o *verifyOptions) SubjectDescriptor() (attestation.Subject, error) {
-	if o.kind() == subjectModel {
+	switch o.kind() {
+	case subjectImage:
+		return imageSubject(context.Background(), o.ImageRef)
+	case subjectModel:
 		return modelSubject(o.ModelPath, o.ModelIgnorePaths, o.ModelAllowSymlinks)
+	case subjectArtifact:
 	}
 
 	// If we have a hash, check it and create the descriptor:
@@ -339,6 +350,10 @@ func (o *verifyOptions) Validate() error {
 		o.VerificationOptions.Validate(),
 	}
 	switch o.kind() {
+	case subjectImage:
+		if o.ImageRef == "" {
+			errs = append(errs, errors.New("no image reference specified"))
+		}
 	case subjectModel:
 		if o.ModelPath == "" {
 			errs = append(errs, errors.New("no model path specified"))
@@ -459,8 +474,9 @@ against a hash. AMPEL can compute the hashes from files for you (--subject-file)
 or you can specify a hash in the command line using --subject-hash.
 
 Files and digests are verified by "ampel verify artifact"; other kinds of
-subjects get their own subcommand: "ampel verify model" hashes an AI model
-directory the way model signing does. Running "ampel verify" with no
+subjects get their own subcommand: "ampel verify image" resolves a container
+image reference to its manifest digest and "ampel verify model" hashes an AI
+model directory the way model signing does. Running "ampel verify" with no
 subcommand is the same as "ampel verify artifact".
 
 %s
@@ -585,6 +601,7 @@ func newVerifyCommand() (*cobra.Command, *verifyOptions) {
 
 	evalCmd.AddCommand(
 		newVerifyArtifactCommand(opts),
+		newVerifyImageCommand(opts),
 		newVerifyModelCommand(opts),
 	)
 	return evalCmd, opts
