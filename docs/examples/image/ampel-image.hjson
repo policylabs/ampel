@@ -1,0 +1,76 @@
+{
+    id: AMPEL-IMAGE
+
+    meta: {
+        name: "Ampel Container Image Provenance"
+        description: "Checks that an ampel image was built by its release workflow from the ampel repository"
+    }
+
+    // The ampel release workflow signs the image with sigstore and attaches
+    // SLSA provenance to it as an OCI referrer. Only provenance signed by that
+    // workflow, running on GitHub Actions, counts as evidence: anything else
+    // attached to the image is rejected before a tenet looks at it. The
+    // identity names the workflow file, so it matches every release.
+    identities: [
+        {
+            sigstore: {
+                issuer: "https://token.actions.githubusercontent.com"
+                identity: "^https://github.com/policylabs/ampel/.github/workflows/release.yaml@refs/tags/v[0-9.]+$"
+                mode: "regexp"
+            }
+        }
+    ]
+
+    predicates: {
+        types: [ "https://slsa.dev/provenance/v1" ]
+    }
+
+    tenets: [
+        {
+            // GitHub's provenance names the workflow and the commit it ran at
+            // as the builder, so only the workflow part is pinned.
+            id: builder-id
+            outputs: {
+                builderId: {
+                    code: "size(predicates) > 0 && has(predicates[0].data.runDetails.builder.id) ? predicates[0].data.runDetails.builder.id : ''"
+                }
+            }
+            code: "outputs.builderId.startsWith('https://github.com/policylabs/ampel/.github/workflows/release.yaml@')"
+            assessment: { message: "Built by the release workflow: {{ .Outputs.builderId }}" }
+            error: {
+                message: "The image was built by an unexpected builder"
+                guidance: "Expected the ampel release workflow, the provenance says {{ .Outputs.builderId }}"
+            }
+        }
+
+        {
+            id: build-type
+            outputs: {
+                buildType: {
+                    code: "size(predicates) > 0 && has(predicates[0].data.buildDefinition.buildType) ? predicates[0].data.buildDefinition.buildType : ''"
+                }
+            }
+            code: "outputs.buildType == 'https://actions.github.io/buildtypes/workflow/v1'"
+            assessment: { message: "Built through a GitHub Actions workflow" }
+            error: {
+                message: "The provenance records an unexpected build type"
+                guidance: "Expected a GitHub Actions workflow build, the provenance says {{ .Outputs.buildType }}"
+            }
+        }
+
+        {
+            id: source-repo
+            outputs: {
+                sources: {
+                    code: "size(predicates) > 0 && has(predicates[0].data.buildDefinition.resolvedDependencies) ? predicates[0].data.buildDefinition.resolvedDependencies.map(d, d.uri) : []"
+                }
+            }
+            code: "outputs.sources.exists(uri, uri.startsWith('git+ssh://github.com/policylabs/ampel@'))"
+            assessment: { message: "Built from github.com/policylabs/ampel" }
+            error: {
+                message: "The image was not built from the ampel repository"
+                guidance: "Expected github.com/policylabs/ampel among the resolved dependencies, found {{ .Outputs.sources }}"
+            }
+        }
+    ]
+}

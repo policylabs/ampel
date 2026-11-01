@@ -19,14 +19,11 @@ signature verification mechanisms can be added.
 
 As a supply chain security tool, Ampel can work with common formats like
 [SLSA](https://slsa.dev) to check software provenance and SBOMs to gate on
-depedndency data, but policies can be written against any custom data in JSON.
+dependency data, but policies can be written against any custom data in JSON.
 
-The policy engine also supports __transformers__ that can read and verify attestations to then convert them to other formats, simplifying policy
-authoring.
-
-[Diagram]
-
-For example, by loading the vulnerability report transformer, Ampel
+The policy engine also supports __transformers__ that can read and verify
+attestations to then convert them to other formats, simplifying policy
+authoring. For example, by loading the vulnerability report transformer, Ampel
 can transform the output of the common vulnerability scanners to a common format, such as OSV, allowing you to write a single policy to verify the findings of any scanner.
 
 ## Installing
@@ -61,18 +58,111 @@ If you have Go installed, you can install ampel directly:
 go install github.com/policylabs/ampel/cmd/ampel@latest
 ```
 
+### Container Image
+
+Every release also publishes a container image, signed with sigstore and with
+its SLSA provenance attached (the quick start below verifies it). The image
+runs `ampel` as its entrypoint, so mount the policy and evidence you need:
+
+```shell
+docker run --rm -v "$PWD:/work" -w /work ghcr.io/policylabs/ampel:v1.4.2 \
+  verify sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 \
+  -p docs/examples/sbom/sbom-checks.hjson \
+  -a docs/examples/sbom/sbom.spdx.intoto.json
+```
+
 ### GitHub Action
 
 Ampel is also available as a GitHub Action for use in CI/CD workflows.
 See [carabiner-dev/actions](https://github.com/carabiner-dev/actions) for
 setup instructions and usage examples.
 
+## Quick Start
+
+An evaluation needs three things: a subject to verify, a policy, and
+attestations about the subject. The [`docs/examples`](docs/examples) directory
+holds small policies with the attestations they read, so every command below
+runs from a checkout of this repository with no network access and nothing
+else to set up.
+
+### Verify an artifact
+
+The examples describe an imaginary artifact, so the subject is given as its
+digest. This one checks the artifact's SBOM: every package declares a license,
+the licenses are on an allowed list, and a required dependency is present.
+
+```shell
+ampel verify sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 \
+  -p docs/examples/sbom/sbom-checks.hjson \
+  -a docs/examples/sbom/sbom.spdx.intoto.json
+```
+
+With a real file, pass its path instead of the digest and ampel hashes it:
+
+```shell
+ampel verify ./dist/app-linux-amd64 -p policy.hjson -a provenance.intoto.json
+```
+
+`ampel verify` is short for `ampel verify artifact`. Attestations given with
+`-a` are admitted even when unsigned, which is fine for a demo; in production
+you let collectors fetch signed attestations (`-c`) and name the trusted
+signers in the policy.
+
+### Verify a container image
+
+`ampel verify image` resolves an image reference to the digest of its
+manifest, the digest signatures and attestations about an image are bound to,
+and collects the attestations attached to the image in its registry (under
+cosign's `.att` tag or as OCI referrers) without further configuration. The
+ampel release signs its own image and attaches SLSA provenance to it, so this
+checks a real image: the provenance must be signed by the release workflow,
+and must say the image was built by that workflow, on GitHub Actions, from
+this repository.
+
+```shell
+ampel verify image ghcr.io/policylabs/ampel:v1.4.2 \
+  -p docs/examples/image/ampel-image.hjson
+```
+
+To try the command without a registry, use a digest reference, which needs no
+lookup, turn the registry collectors off and read the example attestation
+from a file:
+
+```shell
+ampel verify image ghcr.io/example/hello-world@sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 \
+  --registry-attestations=false \
+  -p docs/examples/custom-predicate/code-review.hjson \
+  -a docs/examples/custom-predicate/code-review.intoto.json
+```
+
+For a multi-platform image, `--platform linux/arm64` verifies one platform's
+manifest instead of the index, for attestations that name the platform
+manifests rather than the index.
+
+### Verify an AI model
+
+`ampel verify model` hashes a model directory the way the
+[OpenSSF Model Signing](https://github.com/ossf/model-signing-spec)
+specification defines, so attestations produced by model signing match it.
+The example model is the two-file model of the specification's conformance
+suite, with the statement its signature carries:
+
+```shell
+ampel verify model docs/examples/model/simple \
+  -p docs/examples/model/model-signing.hjson \
+  -a docs/examples/model/model-signing.intoto.json
+```
+
+The [examples guide](docs/examples/README.md) walks through each example, and
+the [documentation](docs/README.md) covers policies, attestations, collectors
+and results in depth.
+
 ## The Ampel Ecosystem
 
 ### Attestations Collector
 
 Policy evaluation relies on attestations. AMPEL relies on the
-[Carabiner Collector](https://github.com/policylabs/collector)
+[Policy Labs collector](https://github.com/policylabs/collector)
 to read attestations from all sorts of backends, from repositories, registries,
 filesystems and more.
 
@@ -90,6 +180,11 @@ attest their state.
 
 - [unpack](https://github.com/carabiner-dev/unpack): A dependency extractor with
 SBOM visualization and generation capabilities.
+
+- [oms](https://github.com/carabiner-dev/model-signing): Signs and verifies AI
+models following the
+[OpenSSF Model Signing specification](https://openssf.org/projects/model-signing/).
+Its hashing is what `ampel verify model` uses.
 
 ## Policies
 
@@ -113,7 +208,7 @@ At a higher level a policy consists of:
 ### Tenet
 
 A policy's _tenets_ (those principles we hold to be true) are the core of the
-policy. Each tenet represents a check Ampel will perform on the avilable evidence.
+policy. Each tenet represents a check Ampel will perform on the available evidence.
 
 The tenet structure contains the evaluation code that will be executed to check
 if the tenet holds true.
@@ -162,7 +257,9 @@ for details.
 Multiple policies can be specified together in a `PolicySet`. This is a handy way
 to maintain policies that relate to each other in a single file to make them
 available to the engine at evaluation time. The results of policies tied together
-in a PolicySet can also be reported together in a ResultsSet.
+in a PolicySet can also be reported together in a ResultsSet. When there is more
+than one way to satisfy a requirement, a `PolicyGroup` holds blocks of
+alternative policies; see the [policy groups guide](docs/05-policy-groups.md).
 
 ## Copyright
 
