@@ -102,6 +102,7 @@ type verifyOptions struct {
 	// collectors that read the attestations attached to it in its
 	// registry.
 	ImageRef             string
+	ImagePlatform        string
 	RegistryAttestations bool
 
 	// ModelPath is the AI model directory (or single file) hashed by
@@ -157,6 +158,9 @@ func (o *verifyOptions) addArtifactFlags(cmd *cobra.Command) {
 
 // addImageFlags adds the flags of the image subcommand.
 func (o *verifyOptions) addImageFlags(cmd *cobra.Command) {
+	cmd.Flags().StringVar(
+		&o.ImagePlatform, "platform", "", "platform (os/arch[/variant]) whose manifest to verify when the reference is a multi-platform image",
+	)
 	cmd.Flags().BoolVar(
 		&o.RegistryAttestations, "registry-attestations", true, "collect the attestations attached to the image in its registry (cosign .att tag and OCI referrers)",
 	)
@@ -288,7 +292,7 @@ func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
 // Flag names a command does not define are skipped, so the same list serves
 // every verify command.
 func (o *verifyOptions) groupFlags(cmd *cobra.Command) {
-	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash", "ignore-path", "allow-symlinks")
+	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash", "platform", "ignore-path", "allow-symlinks")
 	groupFlags(cmd, grpPolicy, "policy", "pid", "policy-out", "policy-verify", "policy-key", "policy-signer", "expiration")
 	groupFlags(cmd, grpEvidence, "key", "attestation", "collector", "signer", "registry-attestations")
 	groupFlags(cmd, grpContext, "context", "context-json", "context-yaml", "context-env")
@@ -319,7 +323,7 @@ func (o *verifyOptions) kind() subjectKind {
 func (o *verifyOptions) SubjectDescriptor() (attestation.Subject, error) {
 	switch o.kind() {
 	case subjectImage:
-		return imageSubject(context.Background(), o.ImageRef)
+		return imageSubject(context.Background(), o.ImageRef, o.ImagePlatform)
 	case subjectModel:
 		return modelSubject(o.ModelPath, o.ModelIgnorePaths, o.ModelAllowSymlinks)
 	case subjectArtifact:
