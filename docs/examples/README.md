@@ -1,11 +1,12 @@
 # AMPEL Examples
 
-Four small, self-contained examples. Each directory holds a policy and the
-attestation it reads, so every one of them runs as-is with no network access
-and no collectors configured.
+Six small examples. The first five are self-contained: each directory holds
+a policy and the attestation it reads, so they run as-is with no network
+access and no collectors configured. The last one verifies a published
+container image and reads its attestations from the registry.
 
-All four describe the same imaginary artifact, so they share one subject
-digest:
+The first four describe the same imaginary artifact, so they share one
+subject digest:
 
 ```shell
 export SUBJECT=sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
@@ -22,6 +23,8 @@ and let AMPEL verify the signatures.
 | [`custom-predicate/`](custom-predicate) | Writing policy against a predicate type AMPEL knows nothing about |
 | [`policyset/`](policyset) | A PolicySet: several policies sharing context, mapped to framework controls |
 | [`group/`](group) | A PolicyGroup: blocks of _alternative_ policies |
+| [`model/`](model) | Verifying an AI model directory against its model signing statement |
+| [`image/`](image) | Verifying a published container image with the provenance attached to it in the registry |
 
 ## 1. Checking an SBOM
 
@@ -111,3 +114,62 @@ ampel verify -s $SUBJECT \
 The attestation records coffee and toast, so both blocks pass. Edit it to
 serve orange juice instead and the drinks block fails while the food block
 keeps passing — one failed requirement is enough to fail the group.
+
+## 5. An AI model
+
+The subjects above are all digests, because the examples describe an
+imaginary artifact. [`model/`](model) is different: it holds an actual model,
+the two-file `simple` model of the
+[OpenSSF Model Signing](https://github.com/ossf/model-signing-spec)
+conformance suite, and `ampel verify model` hashes the directory the way the
+specification defines, every file hashed and the digests folded into one root
+digest. That digest is what model signing records as the subject of its
+signatures, and it is the subject of
+[`model/model-signing.intoto.json`](model/model-signing.intoto.json), the
+statement such a signature carries.
+
+```shell
+ampel verify model docs/examples/model/simple \
+  -p docs/examples/model/model-signing.hjson \
+  -a docs/examples/model/model-signing.intoto.json
+```
+
+[`model/model-signing.hjson`](model/model-signing.hjson) reads the statement's
+predicate, which records how the model was serialized, and checks that it was
+hashed file by file with sha256 and without following symlinks. Change a byte
+of either file and the run fails before any tenet is evaluated: the directory
+no longer hashes to the subject the attestation describes, so there is no
+evidence to evaluate.
+
+A real model signature is a sigstore bundle produced by the
+[model_signing](https://github.com/sigstore/model-transparency) tool or by
+[oms](https://github.com/carabiner-dev/model-signing); pass it with `-a` the
+same way.
+
+## 6. A container image, with evidence from the registry
+
+Everything so far read attestations from files. [`image/`](image) holds only
+a policy, because the evidence lives in the registry: the ampel release
+workflow signs the ampel container image with sigstore and attaches its SLSA
+provenance to the image as an OCI referrer. `ampel verify image` resolves the
+tag to the digest of the image's manifest and collects what is attached to it
+under cosign's `.att` tag and as OCI referrers, so the policy's provenance is
+found without any collector configured.
+
+```shell
+ampel verify image ghcr.io/policylabs/ampel:v1.4.2 \
+  -p docs/examples/image/ampel-image.hjson
+```
+
+[`image/ampel-image.hjson`](image/ampel-image.hjson) is the first example to
+pin its signer. Its `identities` block accepts only provenance signed through
+GitHub Actions by the ampel release workflow, matched with a regular
+expression so every release qualifies; provenance signed by anyone else is
+rejected before a tenet sees it. The tenets then check the builder, the build
+type and the source repository the way the SLSA example does, except that
+GitHub's provenance names the workflow and the commit it ran at as the
+builder, so the tenet pins the workflow and lets the commit vary.
+
+Change the identity to another repository and the run fails with
+"attestation signer does not match an accepted identity", which is the
+difference between evidence and signed evidence.

@@ -1,0 +1,32 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "simple",
+      "digest": {
+        "sha256": "92745110b1ab4368471cbe31664e10174e954b113a3df333db860317b2c6dec4"
+      }
+    }
+  ],
+  "predicateType": "https://model_signing/signature/v1.0",
+  "predicate": {
+    "serialization": {
+      "method": "files",
+      "hash_type": "sha256",
+      "allow_symlinks": false,
+      "ignore_paths": [".git", ".gitattributes", ".github", ".gitignore"]
+    },
+    "resources": [
+      {
+        "name": "signme-1",
+        "algorithm": "sha256",
+        "digest": "bc9a717db6064a32cbe9eae6fc40651dd6d36ef1757183f590eff2b1765d7ebc"
+      },
+      {
+        "name": "signme-2",
+        "algorithm": "sha256",
+        "digest": "32dcb1f8e1ae52d5963e56a6ba06ab58b424c15ed2a6b70d2feca1d089370028"
+      }
+    ]
+  }
+}

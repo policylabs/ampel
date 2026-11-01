@@ -1,0 +1,56 @@
+{
+    id: MODEL-SIGNING
+
+    meta: {
+        name: "Model Signing Checks"
+        description: "Checks how an AI model was serialized when it was signed"
+    }
+
+    // OpenSSF Model Signing records, next to the digest of every file of the
+    // model, how the model was enumerated: the serialization method, the hash
+    // algorithm, whether symlinks were followed and which paths were left out.
+    // The attestation next to this file carries that predicate for the model
+    // in the simple/ directory, and `ampel verify model` hashes the directory
+    // into the same root digest the attestation names as its subject.
+    predicates: {
+        types: [ "https://model_signing/signature/v1.0" ]
+    }
+
+    tenets: [
+        {
+            id: files-method
+            code: "size(predicates) > 0 && has(predicates[0].data.serialization.method) && predicates[0].data.serialization.method == 'files'"
+            assessment: { message: "The model was serialized file by file" }
+            error: {
+                message: "The model was not serialized with the files method"
+                guidance: "Only file serialization is accepted, sharded models need review"
+            }
+        }
+
+        {
+            id: no-symlinks
+            code: "size(predicates) > 0 && has(predicates[0].data.serialization.allow_symlinks) && predicates[0].data.serialization.allow_symlinks == false"
+            assessment: { message: "Symlinks were not followed when the model was signed" }
+            error: {
+                message: "The signer followed symlinks"
+                guidance: "Models signed with allow_symlinks can include files from outside the model directory"
+            }
+        }
+
+        {
+            // Every file the signer recorded must be hashed with sha256.
+            id: sha256-digests
+            outputs: {
+                resources: {
+                    code: "has(predicates[0].data.resources) ? predicates[0].data.resources : []"
+                }
+            }
+            code: "size(outputs.resources) > 0 && outputs.resources.all(r, r.algorithm == 'sha256')"
+            assessment: { message: "{{ len .Outputs.resources }} files recorded with sha256 digests" }
+            error: {
+                message: "The model manifest uses an unexpected hash algorithm"
+                guidance: "Expected sha256 digests for every file"
+            }
+        }
+    ]
+}
