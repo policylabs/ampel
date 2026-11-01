@@ -482,8 +482,8 @@ github.com/policylabs/signer v0.6.5-0.20261008081547-3730a48c4c4f h1:LRbnxZ70dTY
 github.com/policylabs/signer v0.6.5-0.20261008081547-3730a48c4c4f/go.mod h1:oPcQlEW6uaiLCWTiwZLxF+KdQuSRhx3h6xVVEcTlFNE=
 github.com/protobom/cel v0.1.3 h1:ILfLFmpRe6ZeA25TjAlUi8+0rTPvkyJ8DydkwaXteR8=
 github.com/protobom/cel v0.1.3/go.mod h1:1cLp7dB0bGlTQr4762RTZy6/tJ3Ktkpdc3IVkW/So4s=
-github.com/protobom/protobom v0.6.2 h1:HJTEEnYyU1m3VWoVj0TkDqArWC3Q2CvSFXHUpCkRkoI=
-github.com/protobom/protobom v0.6.2/go.mod h1:WtLWrIyJthYwjbNqn4uMWzculpjNrmVYY78FgCRXe7w=
+github.com/protobom/protobom v0.7.0 h1:xz5DQApHoOGKLYYXcwfXYB7RoZgZl1/H2674AoqJ0x8=
+github.com/protobom/protobom v0.7.0/go.mod h1:Lzl3cG2qhCEzK6N6x2LyYWyYdHJTBRU1zl6UqTBuDSI=
 github.com/regclient/regclient v0.11.6 h1:IUcd3slMqo1CaLQ3JcE0W039gUv7uYZpY5FsyAYowXA=
 github.com/regclient/regclient v0.11.6/go.mod h1:c20PYhof9UIPpWS6TgZq/qPt3vCdaU1TCbqauZ39iF0=
 github.com/rivo/uniseg v0.4.7 h1:WUdvkW8uEhrYfLC4ZzdpI2ztxP1I582+49Oc5Mq64VQ=
