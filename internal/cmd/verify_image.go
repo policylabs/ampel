@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 
 	"github.com/carabiner-dev/command/subject"
 	"github.com/google/go-containerregistry/pkg/crane"
@@ -34,10 +35,14 @@ For a multi-platform image, the reference resolves to the digest of the
 image index, the digest build tools attest to. To check a single platform
 give the digest of that platform's manifest instead.
 
-The policy and the evidence are given exactly as for "ampel verify".
+Attestations attached to the image in its registry are collected by
+default, both those cosign stores under the image's .att tag and those
+attached as OCI referrers; --registry-attestations=false turns that off.
+More evidence is given exactly as for "ampel verify", with --attestation
+or --collector.
 `, AmpelBanner("Amazing Multipurpose Policy Engine and L")),
 		Use:           "image REFERENCE",
-		Example:       "  ampel verify image ghcr.io/example/app:v1.2.3 -p policy.json -c coci:ghcr.io/example/app:v1.2.3",
+		Example:       "  ampel verify image ghcr.io/example/app:v1.2.3 -p policy.json",
 		SilenceUsage:  false,
 		SilenceErrors: false,
 		Args: func(_ *cobra.Command, args []string) error {
@@ -49,13 +54,34 @@ The policy and the evidence are given exactly as for "ampel verify".
 		PreRunE: func(_ *cobra.Command, args []string) error {
 			opts.SubjectKind = subjectImage
 			opts.ImageRef = args[0]
+			if opts.RegistryAttestations {
+				opts.Collectors = withRegistryCollectors(opts.Collectors, opts.ImageRef)
+			}
 			return nil
 		},
 		RunE: runVerify(opts),
 	}
 	opts.AddFlags(cmd)
+	opts.addImageFlags(cmd)
 	opts.groupFlags(cmd)
 	return cmd
+}
+
+// registryCollectorTypes are the collectors that read attestations attached
+// to an image in its registry: coci reads the cosign .att tag, oci the OCI
+// referrers.
+var registryCollectorTypes = []string{"coci", "oci"}
+
+// withRegistryCollectors adds the registry collectors for ref to the
+// collector init strings, skipping any the user already configured.
+func withRegistryCollectors(collectors []string, ref string) []string {
+	for _, t := range registryCollectorTypes {
+		init := t + ":" + ref
+		if !slices.Contains(collectors, init) {
+			collectors = append(collectors, init)
+		}
+	}
+	return collectors
 }
 
 // imageSubject resolves an image reference into the resource descriptor

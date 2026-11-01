@@ -48,7 +48,7 @@ attestations about them do:
 
 ```bash
 # A container image, resolved to the digest of its manifest
-ampel verify image ghcr.io/example/app:v1.2.3 -p policy.json -c coci:ghcr.io/example/app:v1.2.3
+ampel verify image ghcr.io/example/app:v1.2.3 -p policy.json
 
 # An AI model directory, hashed as OpenSSF Model Signing does
 ampel verify model ./my-model -p policy.json -a my-model.sig
@@ -58,7 +58,11 @@ ampel verify model ./my-model -p policy.json -a my-model.sig
 of the manifest the tag points to, the digest that signatures and
 attestations about the image are bound to. A reference that already carries
 a digest is used as is. Multi-platform images resolve to the digest of their
-index; to check one platform, pass that platform's manifest digest.
+index; to check one platform, pass that platform's manifest digest. The
+attestations attached to the image in its registry, both under cosign's
+`.att` tag and as OCI referrers, are collected by default, so no collector
+needs to be configured for them; `--registry-attestations=false` turns that
+off, and `--attestation` and `--collector` add evidence from elsewhere.
 
 `ampel verify model` walks the model directory (or a single model file),
 hashes every regular file and folds the digests into the root digest that

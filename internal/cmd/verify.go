@@ -98,8 +98,11 @@ type verifyOptions struct {
 	SubjectKind subjectKind
 
 	// ImageRef is the container image reference verify image resolves to
-	// the digest of the image manifest.
-	ImageRef string
+	// the digest of the image manifest. RegistryAttestations adds the
+	// collectors that read the attestations attached to it in its
+	// registry.
+	ImageRef             string
+	RegistryAttestations bool
 
 	// ModelPath is the AI model directory (or single file) hashed by
 	// verify model, with the paths left out of its digest and whether
@@ -149,6 +152,13 @@ func (o *verifyOptions) addArtifactFlags(cmd *cobra.Command) {
 
 	cmd.Flags().StringVar(
 		&o.SubjectHash, "subject-hash", "", "hash to verify (algorithm:value, any in-toto DigestSet algorithm)",
+	)
+}
+
+// addImageFlags adds the flags of the image subcommand.
+func (o *verifyOptions) addImageFlags(cmd *cobra.Command) {
+	cmd.Flags().BoolVar(
+		&o.RegistryAttestations, "registry-attestations", true, "collect the attestations attached to the image in its registry (cosign .att tag and OCI referrers)",
 	)
 }
 
@@ -280,7 +290,7 @@ func (o *verifyOptions) AddFlags(cmd *cobra.Command) {
 func (o *verifyOptions) groupFlags(cmd *cobra.Command) {
 	groupFlags(cmd, grpSubject, "subject", "subject-file", "subject-hash", "ignore-path", "allow-symlinks")
 	groupFlags(cmd, grpPolicy, "policy", "pid", "policy-out", "policy-verify", "policy-key", "policy-signer", "expiration")
-	groupFlags(cmd, grpEvidence, "key", "attestation", "collector", "signer")
+	groupFlags(cmd, grpEvidence, "key", "attestation", "collector", "signer", "registry-attestations")
 	groupFlags(cmd, grpContext, "context", "context-json", "context-yaml", "context-env")
 	groupFlags(cmd, grpResults, "attest-results", "attest-format", "results-path", "format", "publish")
 	groupFlags(cmd, grpVerification, "exit-code", "allow-skip", "fail-skip", "workers", "allow-empty-set-chain", "skip-unsupported-runtime")
