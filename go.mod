@@ -16,7 +16,7 @@ require (
 	github.com/openvex/go-vex v0.2.9
 	github.com/package-url/packageurl-go v0.1.7
 	github.com/pandatix/go-cvss v0.6.4
-	github.com/protobom/cel v0.1.3
+	github.com/protobom/cel v0.1.5
 	github.com/protobom/protobom v0.7.0
 	github.com/sirupsen/logrus v1.10.2
 	github.com/spf13/cobra v1.10.2
@@ -213,7 +213,7 @@ require (
 	github.com/policylabs/collector v0.4.0
 	github.com/policylabs/policy v0.6.0
 	github.com/policylabs/predicates v0.6.0
-	github.com/policylabs/signer v0.6.6-0.20261101043055-f783108057e3
+	github.com/policylabs/signer v0.6.7
 	github.com/regclient/regclient v0.11.6 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
