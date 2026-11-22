@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: Copyright 2025 The Policy Labs Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
 ---
 name: SLSA Source
 on:
@@ -13,4 +16,5 @@ jobs:
       contents: write # needed for storing the vsa in the repo.
       id-token: write # meeded to mint yokens for signing
     uses: slsa-framework/actions/.github/workflows/compute_slsa_source.yml@4b2114c4378d0f2bfb0ae99dbb6958bfc44d3a98 # v0.2.1
-
+    with:
+      allow-merge-commits: true
