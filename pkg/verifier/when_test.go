@@ -119,6 +119,9 @@ func TestWhenAfterEvidence(t *testing.T) {
 	withEvidence := func() *VerificationOptions {
 		o := whenTestOptions()
 		o.AttestationFiles = []string{"testdata/wtf-frontend.spdx.json"}
+		// The SPDX document the chains read is unsigned: admit it as
+		// explicitly passed evidence. Pinned identities still reject it.
+		o.AdmitUnverified = true
 		return o
 	}
 	// chainedPolicy follows the SPDX document to a package digest.

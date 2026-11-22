@@ -555,6 +555,52 @@ tag to the commit and checking the commit against the tag:
 The second hop of a longer chain can likewise read the first through
 `chain[0]` from its selector.
 
+### Who signs a hop
+
+The attestation a hop reads is evidence like any other, so it goes through
+the same two gates as the attestations the tenets evaluate (see
+[Signer Identities](#signer-identities)):
+
+1. **Signature.** The attestation's signature must verify. An unsigned
+   attestation, or one signed with a key the verifier does not hold, stops
+   the chain and fails the policy.
+2. **Identity.** When signer identities are pinned, the attestation must be
+   signed by one of them. A hop is checked against the `identities` of its
+   own link when it declares any, and against the policy's otherwise. With
+   no identities in either, those passed with `--signer` apply.
+
+```json
+{
+    "chain": [
+        {
+            "predicate": {
+                "type": "https://carabiner.dev/git/tag/v0",
+                "selector": "\"sha1:\" + predicate.data.object",
+                "identities": [
+                    { "sigstore": { "issuer": "https://accounts.google.com", "identity": "releases@example.com" } }
+                ]
+            }
+        }
+    ]
+}
+```
+
+A link's identities replace the policy's for that hop, they do not add to
+them: use them when the attestation the chain is read from is signed by a
+different party than the evidence at the end of it.
+
+The exception for unverified evidence is the general one, with the same
+limits. `ampel verify` admits an unsigned attestation into a chain only when
+it was passed with `--attestation` / `-a` and no signer identity applies to
+the hop. An unsigned attestation found by a collector never completes a hop,
+and neither does any unsigned attestation once identities are pinned. Library
+callers opt in with the `AdmitUnverified` verification option, which is off
+by default.
+
+When the hop's attestation is rejected the policy fails with `unable to
+validate chained attestation identity`. Only the first attestation matching
+a hop is read and checked.
+
 ### Conditions on referenced policies
 
 A `when` set on the stanza that references a policy from another location is
