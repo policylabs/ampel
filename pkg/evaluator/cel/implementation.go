@@ -454,7 +454,7 @@ func decodeValue(val ref.Val) (attestation.Subject, error) {
 	case string:
 		algo, val, ok := strings.Cut(v, ":")
 		if !ok {
-			return nil, fmt.Errorf("string returned not formatted as algorithm:value")
+			return nil, fmt.Errorf("string returned %q not formatted as algorithm:value", v)
 		}
 		// Algorithm names match regardless of case and are stored in their
 		// canonical casing (sha256, gitCommit, ...), as a struct result's are.

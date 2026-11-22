@@ -862,7 +862,10 @@ func (di *defaultIplementation) evaluateChain(
 		if err != nil {
 			return nil, nil, false, fmt.Errorf("resolving chained attestation identity: %w", err)
 		}
-		pass, ids, _, err = di.CheckIdentities(ctx, opts, chainIdentities, lattestation[0:0])
+		// The attestation the hop reads must come from an admitted signer,
+		// like any evidence; an empty slice here checked nothing and failed
+		// every constrained chain.
+		pass, ids, _, err = di.CheckIdentities(ctx, opts, chainIdentities, lattestation[0:1])
 		if err != nil {
 			return nil, nil, false, fmt.Errorf("error checking attestation identity: %w", err)
 		}

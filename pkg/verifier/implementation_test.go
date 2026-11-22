@@ -200,8 +200,12 @@ func TestEvaluateChain(t *testing.T) {
 			// Copy the struct to avoid races when parallel subtests modify AttestationFiles
 			opts := DefaultVerificationOptions
 			opts.AttestationFiles = tt.attestationPaths
+			// The fixtures are unsigned: admit them as Verify does for
+			// evidence the caller passes explicitly.
+			opts.AdmitUnverified = true
 			attestations, err := di.ParseAttestations(t.Context(), &opts, tt.subject)
 			require.NoError(t, err)
+			ctx := withExplicitEvidence(t.Context(), attestations)
 
 			// Create a local copy of evaluators to avoid races when parallel subtests
 			// add new evaluators for different runtimes
@@ -227,7 +231,7 @@ func TestEvaluateChain(t *testing.T) {
 
 			// should we test policyFail?
 			subjects, chain, _, err := di.evaluateChain(
-				t.Context(), &opts, localEvaluators,
+				ctx, &opts, localEvaluators,
 				nil, // the vollector agent should not be required
 				tt.chainLinks,
 				nil, // no context values in tests
@@ -1096,12 +1100,14 @@ func TestProcessChainedSubjectsEmptyChainFails(t *testing.T) {
 
 	opts := DefaultVerificationOptions
 	opts.AttestationFiles = []string{"testdata/wtf-frontend.spdx.json"}
+	// The fixture is unsigned: admit it as explicitly passed evidence.
+	opts.AdmitUnverified = true
 
 	attestations, err := di.ParseAttestations(t.Context(), &opts, subject)
 	require.NoError(t, err)
 
 	_, _, fail, gotErr := di.ProcessChainedSubjects(
-		t.Context(), &opts, evaluators, nil, policy, nil, subject, attestations,
+		withExplicitEvidence(t.Context(), attestations), &opts, evaluators, nil, policy, nil, subject, attestations,
 	)
 
 	require.ErrorContains(t, gotErr, "no subject returned")
@@ -1128,6 +1134,8 @@ func TestEvaluateChainKeepsHopPredicates(t *testing.T) {
 	}
 	opts := DefaultVerificationOptions
 	opts.AttestationFiles = []string{"testdata/wtf-frontend.spdx.json", "testdata/link1.json"}
+	// The fixtures are unsigned: admit them as explicitly passed evidence.
+	opts.AdmitUnverified = true
 	attestations, err := di.ParseAttestations(t.Context(), &opts, subject)
 	require.NoError(t, err)
 	links := []*papi.ChainLink{
@@ -1141,7 +1149,7 @@ func TestEvaluateChainKeepsHopPredicates(t *testing.T) {
 		}}},
 	}
 	subjects, hops, failed, err := di.evaluateChain(
-		t.Context(), &opts, evaluators, nil, links, nil, subject, attestations, []*sapi.Identity{}, "",
+		withExplicitEvidence(t.Context(), attestations), &opts, evaluators, nil, links, nil, subject, attestations, []*sapi.Identity{}, "",
 	)
 	require.NoError(t, err)
 	require.False(t, failed)

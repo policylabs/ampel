@@ -132,6 +132,11 @@ unverified attestations reach policies with `verification.verified` set to
 false so a policy can still tell them apart. Library callers get the same
 behavior through the `AdmitUnverified` verification option.
 
+These rules cover every attestation a policy reads, including the ones a
+[chain](03-ampel-policy-guide.md#who-signs-a-hop) follows to reach its subject:
+a hop's attestation must pass the same signature and identity gates, and is
+admitted unverified only under the exception above.
+
 But when it comes to the signing identity, AMPEL does not do any assumptions. It is
 up to the policy to define who can sign attestations. _Who_ in this context refers
 to a key or sigstore identity, or a mix of both. Identities pinned in a policy
