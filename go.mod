@@ -36,7 +36,7 @@ require (
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/avast/retry-go/v4 v4.7.0 // indirect
 	github.com/carabiner-dev/ghrfs v0.3.7 // indirect
-	github.com/carabiner-dev/github v0.2.3 // indirect
+	github.com/carabiner-dev/github v0.2.4 // indirect
 	github.com/carabiner-dev/jsonl v0.2.2 // indirect
 	github.com/carabiner-dev/openeox v1.0.0 // indirect
 	github.com/carabiner-dev/vcslocator v0.5.1 // indirect
@@ -101,7 +101,7 @@ require (
 	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/mod v0.41.0 // indirect
 	golang.org/x/net v0.61.0 // indirect
-	golang.org/x/oauth2 v0.36.0 // indirect
+	golang.org/x/oauth2 v0.37.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/term v0.47.0 // indirect
 	google.golang.org/grpc v1.85.0 // indirect
@@ -147,7 +147,7 @@ require (
 	github.com/aws/smithy-go v1.27.3 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/carabiner-dev/deadrop v0.0.0-20260228173914-d95e9ea2877d // indirect
-	github.com/carabiner-dev/sbomfs v0.2.0 // indirect
+	github.com/carabiner-dev/sbomfs v0.2.1 // indirect
 	github.com/carabiner-dev/spdx3 v0.1.0 // indirect
 	github.com/carabiner-dev/stash v0.0.0-20261004182444-008b3bad7a45 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
@@ -195,7 +195,7 @@ require (
 	github.com/hjson/hjson-go/v4 v4.7.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jellydator/ttlcache/v3 v3.4.1 // indirect
-	github.com/klauspost/compress v1.19.2 // indirect
+	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/kylelemons/godebug v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.22 // indirect
@@ -209,11 +209,11 @@ require (
 	github.com/ossf/osv-schema/bindings/go v0.0.0-20260730052020-9509daabeece // indirect
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/policylabs/attestation v0.3.0
-	github.com/policylabs/collector v0.4.1-0.20261108202120-d195646b3f4e
+	github.com/policylabs/collector v0.4.1
 	github.com/policylabs/policy v0.6.0
 	github.com/policylabs/predicates v0.6.0
 	github.com/policylabs/signer v0.6.7
-	github.com/regclient/regclient v0.11.6 // indirect
+	github.com/regclient/regclient v0.11.7 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/ryanuber/go-glob v1.0.0 // indirect
 	github.com/sassoftware/relic/v8 v8.2.0 // indirect
@@ -232,7 +232,7 @@ require (
 	github.com/tink-crypto/tink-go-awskms/v3 v3.0.0 // indirect
 	github.com/tink-crypto/tink-go-gcpkms/v2 v2.4.0 // indirect
 	github.com/tink-crypto/tink-go/v2 v2.8.0 // indirect
-	github.com/ulikunitz/xz v0.5.16 // indirect
+	github.com/ulikunitz/xz v0.5.17 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.70.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.70.0 // indirect
