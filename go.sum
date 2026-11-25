@@ -110,8 +110,8 @@ github.com/carabiner-dev/command v0.3.4 h1:32MHCUmtz28WqhSUAivpY95bNxTsua5zuSko/
 github.com/carabiner-dev/command v0.3.4/go.mod h1:k946eY40zPkWUQww1FXphDIcqtMa9ZqQLlhBAHJvOos=
 github.com/carabiner-dev/deadrop v0.0.0-20260228173914-d95e9ea2877d h1:Gl8o56PI73PE6YcDzUd49iJJBdp/ye/METanFm8gG64=
 github.com/carabiner-dev/deadrop v0.0.0-20260228173914-d95e9ea2877d/go.mod h1:lwgOJlVMxPu8jptfMKOMTTQntzBTTH38VyuvBeaXUVg=
-github.com/carabiner-dev/ghrfs v0.3.7 h1:P6BVj5LT6yByZZ70AIG5lwKaavFQhD91VDvyYp+xy5A=
-github.com/carabiner-dev/ghrfs v0.3.7/go.mod h1:Ax57l8OkALZmIRWfoJwnGYhGjIq1HDox4++8gHiiRio=
+github.com/carabiner-dev/ghrfs v0.3.8 h1:potuBCzrC+/tc/WWdSONN+RZIWcPzw/YcomNcmT0/Ag=
+github.com/carabiner-dev/ghrfs v0.3.8/go.mod h1:HkDDrOgEQfJt67UWh+/BxOpKJm9WvpTCW1aSaIzuyrk=
 github.com/carabiner-dev/github v0.2.4 h1:rayHDAnUx95vOuCnlgd2jiiX1+19eTaxz3RUWNKL7zA=
 github.com/carabiner-dev/github v0.2.4/go.mod h1:CZvl7MXMKt4OCNBinOzRoE7+g9+RJvALgpYHofdJekA=
 github.com/carabiner-dev/hasher v0.2.4 h1:VaI04+FBHaNV/UEy0NmVoRg0pKLFeN76KPOHbTDvvhE=
@@ -128,8 +128,8 @@ github.com/carabiner-dev/sbomfs v0.2.1 h1:pYLLo/ybjeU80Lg7ROelkr/uzzPR+hIe38B56+
 github.com/carabiner-dev/sbomfs v0.2.1/go.mod h1:OcxNhU6kkNY/RVZuRXcqkY3bHGJYWZfCkbyaa5TNTUY=
 github.com/carabiner-dev/spdx3 v0.1.0 h1:Q6nMLXV0BhtqDQuwRDOaJDZR670TK4jdOvZqvTW/ctY=
 github.com/carabiner-dev/spdx3 v0.1.0/go.mod h1:d/t010TrZvYZBeYGpvHeId6QpRvGLlqK7cy0E81npPA=
-github.com/carabiner-dev/stash v0.0.0-20261004182444-008b3bad7a45 h1:AehL6+PA85whryLIpD5pkxR4EkrNdkbgAeEQ5dnUDR4=
-github.com/carabiner-dev/stash v0.0.0-20261004182444-008b3bad7a45/go.mod h1:S2DNFao2+gFNVBwZv5Mi8AeCHIqIq0n1k2xj0n0VLj4=
+github.com/carabiner-dev/stash v0.0.0-20261112185626-a502ec41ccdf h1:4pHJJLEXNP2U2XAHHOBbBfnjWK+Hcpq1Egy3cYdRzY0=
+github.com/carabiner-dev/stash v0.0.0-20261112185626-a502ec41ccdf/go.mod h1:8L8/7iFo/ToTldsShgSzcwZbnzMw0nA2fRedWfZSNNU=
 github.com/carabiner-dev/termtable v1.1.1 h1:YRE0BJpchX1ld6WSEhJ+LYr+mHAxf8lgO3VN3YGB77U=
 github.com/carabiner-dev/termtable v1.1.1/go.mod h1:J01WI3qNuTNC9ElZPMfy0pPaX8tl68xZ+cKUz4wrSec=
 github.com/carabiner-dev/vcslocator v0.5.1 h1:IK75RcYgHp2HQ1qxAYlhzEJhYTFnqlP9zRJBhkTJ6GI=
@@ -470,8 +470,8 @@ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRI
 github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/policylabs/attestation v0.3.0 h1:tutwsvbq/T5F0Hwt8+M4u42Egk1qP8YbNx4GQ1hnTTA=
 github.com/policylabs/attestation v0.3.0/go.mod h1:z5gJ2M2aAkByYxMLqoOIY31KvAOIX+Ys4ZW2HavM3/o=
-github.com/policylabs/collector v0.4.1 h1:7AYRCoiLaC8RcMc98ujxkiQ9D+UO90GHIpeMbocrzWM=
-github.com/policylabs/collector v0.4.1/go.mod h1:uib/ucmNf6R0fO3NsDy9MZuUr9GOrC6iKYSCvDy/x/0=
+github.com/policylabs/collector v0.4.2 h1:Y7jcUguWguokmkfzzz74u6LF0BC0TIFwgijBB6Xq/z8=
+github.com/policylabs/collector v0.4.2/go.mod h1:eFZcAsNsvHXW7skerv9jwjc+qiZyiNLEpUBDOGQvDjk=
 github.com/policylabs/policy v0.6.0 h1:NUMtcAH3tC123HHZmXK8H2Xo6izaNovwF3XnHbskIKg=
 github.com/policylabs/policy v0.6.0/go.mod h1:a+8uNqhkyYL2EJsJlHFrUwAMt3iqb4jgjeWhIkQEeS0=
 github.com/policylabs/predicates v0.6.0 h1:PgM9/8X8p/i4+Mr+VkijTb2ukeykrHmmjBnk1GuSq+M=
@@ -659,8 +659,8 @@ golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJ
 golang.org/x/sync v0.0.0-20190423024810-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sync v0.0.0-20201020160332-67f06af15bc9/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
-golang.org/x/sync v0.24.0 h1:iqiDrGoDgyuvAKrhLQthUEzU/R378N78gXbBjxed7oA=
-golang.org/x/sync v0.24.0/go.mod h1:sUUOizhqBxiL6pEWpqNLUiaJn1ShEbZ6BBqskPbjZm0=
+golang.org/x/sync v0.25.0 h1:dJnifr0nMV8/SBnBvdo4eSGGnrc3O4FFx6IqvtLcmRs=
+golang.org/x/sync v0.25.0/go.mod h1:sUUOizhqBxiL6pEWpqNLUiaJn1ShEbZ6BBqskPbjZm0=
 golang.org/x/sys v0.0.0-20180909124046-d0be0721c37e/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
