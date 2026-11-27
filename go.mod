@@ -37,7 +37,7 @@ require (
 	github.com/ProtonMail/go-crypto v1.5.2 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/avast/retry-go/v4 v4.7.0 // indirect
-	github.com/carabiner-dev/ghrfs v0.3.7 // indirect
+	github.com/carabiner-dev/ghrfs v0.3.8 // indirect
 	github.com/carabiner-dev/github v0.2.4 // indirect
 	github.com/carabiner-dev/jsonl v0.2.2 // indirect
 	github.com/carabiner-dev/openeox v1.0.0 // indirect
@@ -104,7 +104,7 @@ require (
 	golang.org/x/mod v0.41.0 // indirect
 	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/oauth2 v0.37.0 // indirect
-	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sync v0.25.0 // indirect
 	golang.org/x/term v0.48.0 // indirect
 	google.golang.org/grpc v1.85.0 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
@@ -151,7 +151,7 @@ require (
 	github.com/carabiner-dev/deadrop v0.0.0-20260228173914-d95e9ea2877d // indirect
 	github.com/carabiner-dev/sbomfs v0.2.1 // indirect
 	github.com/carabiner-dev/spdx3 v0.1.0 // indirect
-	github.com/carabiner-dev/stash v0.0.0-20261004182444-008b3bad7a45 // indirect
+	github.com/carabiner-dev/stash v0.0.0-20261112185626-a502ec41ccdf // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/chainguard-dev/clog v1.8.1 // indirect
@@ -211,7 +211,7 @@ require (
 	github.com/ossf/osv-schema/bindings/go v0.0.0-20260730052020-9509daabeece // indirect
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/policylabs/attestation v0.3.0
-	github.com/policylabs/collector v0.4.1
+	github.com/policylabs/collector v0.4.2
 	github.com/policylabs/policy v0.6.0
 	github.com/policylabs/predicates v0.6.0
 	github.com/policylabs/signer v0.6.9-0.20261124232628-ba9993b37ab2
