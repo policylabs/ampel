@@ -132,6 +132,24 @@ fetched from remote sources:
 }
 ```
 
+When the set and its groups live in the same repository, the references can
+be written with `$/` and the path of the file from the root of the repository.
+The groups are then read from the revision the set itself was read from:
+
+```json
+{
+    "id": "MyPolicySet",
+    "groups": [
+        { "source": { "location": { "uri": "$/groups/ac-01.hjson" } } },
+        { "source": { "location": { "uri": "$/groups/br-01.hjson" } } }
+    ]
+}
+```
+
+The same works inside a group, for the policies of its blocks. See
+[Referencing Policies](03-ampel-policy-guide.md#references-to-the-same-repository)
+in the policy guide.
+
 A PolicySet can contain both individual `policies` and `groups`. Both are
 evaluated and their results are combined in the final ResultSet.
 
