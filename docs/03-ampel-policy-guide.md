@@ -111,6 +111,81 @@ outputs are useful when a policy needs to express in its evaluation results  the
 data it looked at when evaluating. See the outputs section later in the handbook
 for more information.
 
+## Referencing Policies
+
+A PolicySet or a PolicyGroup does not need to contain the policies it is made
+of. It can reference them, and AMPEL fetches each one and puts it in place
+before evaluating. A reference is a `source` with the location of the policy:
+
+```json
+{
+    "id": "my-set",
+    "policies": [
+        {
+            "source": {
+                "location": {
+                    "uri": "git+https://github.com/policylabs/policies@<commit>#slsa/slsa-builder-id.json"
+                }
+            }
+        }
+    ]
+}
+```
+
+The `uri` is a VCS locator: the repository, the revision after `@` and the
+path of the file after `#`. Pin the revision to a full commit, so that the
+policy that runs is the one that was reviewed. A `sha256` value under `digest`
+in the location is checked against the fetched file. An HTTPS URL works as a
+location too, and a digest is the only way to pin one.
+
+The stanza holding the reference can set fields of its own, such as `id`,
+`meta`, `context`, `identities`, `when` or tenets, which are laid over the
+referenced policy.
+
+### References to the same repository
+
+Policies that live in one repository can reference each other without naming
+it. A `uri` that starts with `$/` points to a file in the same repository, at
+the same revision, as the document it is written in. What follows `$/` is the
+path of the file from the root of the repository:
+
+```json
+{
+    "id": "my-set",
+    "policies": [
+        { "source": { "location": { "uri": "$/slsa/slsa-builder-id.json" } } }
+    ]
+}
+```
+
+The notation follows the self repository syntax of GitHub Actions. A set
+written this way always runs with the policies of its own revision, so a set
+and its policies can change in the same commit, and pinning the set pins
+everything it references.
+
+Where the referenced file is read from depends on how the set was given to
+AMPEL:
+
+| The set was read from | `$/path` is read from |
+| --- | --- |
+| A VCS locator, `-p git+https://github.com/org/repo@<commit>#sets/set.json` | The same repository at the same commit |
+| A local file, `-p sets/set.json` | The working tree of the git repository the file is in, committed or not, without network access |
+| An HTTPS URL | Nowhere: a URL has no revision to read the reference at, and AMPEL refuses to run the set |
+
+A few rules apply:
+
+- The path always starts at the root of the repository, not at the directory
+  of the document, and cannot leave the repository.
+- A self reference takes no revision: `$/policy.json@v1` is an error.
+- A self reference belongs to the document it is written in. A group fetched
+  from another repository reads its own `$/` references from that repository.
+- A locator naming a branch, a tag or no revision at all is resolved to a
+  commit once, and everything `$/` points to is read at that commit.
+- A local file that is not inside a git repository cannot use `$/`.
+
+The [policy materials reference](https://github.com/policylabs/policy/blob/main/docs/policy-materials.md#self-references)
+has the full details.
+
 ## Evaluation Context
 
 In order to achieve the maximum level of reusability, policy behavior can be
