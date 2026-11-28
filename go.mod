@@ -41,7 +41,7 @@ require (
 	github.com/carabiner-dev/github v0.2.4 // indirect
 	github.com/carabiner-dev/jsonl v0.2.2 // indirect
 	github.com/carabiner-dev/openeox v1.0.0 // indirect
-	github.com/carabiner-dev/vcslocator v0.5.1 // indirect
+	github.com/carabiner-dev/vcslocator v0.5.2 // indirect
 	github.com/cenkalti/backoff/v5 v5.0.3 // indirect
 	github.com/cloudflare/circl v1.6.5 // indirect
 	github.com/coreos/go-oidc/v3 v3.20.0 // indirect
@@ -112,7 +112,7 @@ require (
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.12-20260825204119-511051f7f437.2 // indirect
-	buf.build/go/protovalidate v1.4.0 // indirect
+	buf.build/go/protovalidate v1.4.1 // indirect
 	cel.dev/expr v0.25.3 // indirect
 	cloud.google.com/go v0.123.0 // indirect
 	cloud.google.com/go/auth v0.20.0 // indirect
@@ -212,7 +212,7 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/policylabs/attestation v0.3.0
 	github.com/policylabs/collector v0.4.2
-	github.com/policylabs/policy v0.6.0
+	github.com/policylabs/policy v0.6.1-0.20261128201453-65dd5e8f8400
 	github.com/policylabs/predicates v0.6.0
 	github.com/policylabs/signer v0.6.9-0.20261124232628-ba9993b37ab2
 	github.com/regclient/regclient v0.11.7 // indirect
